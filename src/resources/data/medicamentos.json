@@ -1,3 +1,13 @@
-{
-    "name": "Maria liz"
-}
+[
+  {
+    "idMedicamento": "Med.001",
+    "nombre": "Acetaminofen",
+    "descripcion": "para todos los dolores",
+    "laboratorio": "Genfar",
+    "cantidad": "2000",
+    "lote": "2025-04-04",
+    "fechaVencimiento": "2027-04-04",
+    "disponible": "Si",
+    "precio": "600000"
+  }
+]
