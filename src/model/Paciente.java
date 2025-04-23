@@ -7,16 +7,16 @@ import java.util.List;
 
 public class Paciente extends Persona {
     private String tipoSangre;
-    private String alergias;
-    private List<Cita> citas;
-    private List<HistoriaMedica> historialMedico;
+    private String tipoDocumento;
 
-    public Paciente(String tipoSangre, String alergias, List<Cita> citas, List<HistoriaMedica> historialMedico, String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular) {
+    public Paciente( String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String tipoDocumento,String tipoSangre) {
         super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular);
+         if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
+        throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");
+    }
+        this.tipoDocumento=tipoDocumento;
         this.tipoSangre = tipoSangre;
-        this.alergias = alergias;
-        this.citas = citas;
-        this.historialMedico = historialMedico;
+       
     }
 
     public String getTipoSangre() {
@@ -27,29 +27,16 @@ public class Paciente extends Persona {
         this.tipoSangre = tipoSangre;
     }
 
-    public String getAlergias() {
-        return alergias;
+    public String getTipoDocumento() {
+        return tipoDocumento;
     }
 
-    public void setAlergias(String alergias) {
-        this.alergias = alergias;
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
+    
 
-    public List<Cita> getCitas() {
-        return citas;
-    }
-
-    public void setCitas(List<Cita> citas) {
-        this.citas = citas;
-    }
-
-    public List<HistoriaMedica> getHistorialMedico() {
-        return historialMedico;
-    }
-
-    public void setHistorialMedico(List<HistoriaMedica> historialMedico) {
-        this.historialMedico = historialMedico;
-    }
-
+    
+ 
     
 }
