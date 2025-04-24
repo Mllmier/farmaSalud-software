@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dao;
 
 import com.google.gson.Gson;
@@ -10,63 +14,60 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Paciente;
+import model.Cita;
 
-
-
-public class PacienteDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Pictures\\farmaSalud\\src\\resources\\data\\pacientes.json";
+/**
+ *
+ * @author Maria liz
+ */
+public class CitasDAO {
+     private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Pictures\\farmaSalud\\src\\resources\\data\\citas.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
-      public PacienteDAO() {
-        // Configurar Gson con el adaptador para LocalDate
+      public CitasDAO() {
         this.gson = new GsonBuilder()
             .setPrettyPrinting()
-            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDate.class, new CitasDAO.LocalDateAdapter())
             .create();
     }
-     public List<Paciente> cargarTodos() {
+     public List<Cita> cargarTodos() {
         try (Reader reader = new FileReader(ARCHIVO_JSON)) {
-            return gson.fromJson(reader, new TypeToken<List<Paciente>>() {}.getType());
+            return gson.fromJson(reader, new TypeToken<List<Cita>>() {}.getType());
         } catch (IOException e) {
             return new ArrayList<>(); 
         }
     }
-    
-    public void guardarPaciente(Paciente paciente) {
-        List<Paciente> pacientes = cargarTodos();
-        pacientes.add(paciente);
-        guardarTodos(pacientes);
+     public void guardarCita(Cita cita) {
+        List<Cita> citas = cargarTodos();
+        citas.add(cita);
+        guardarTodos(citas);
     }
-    
-    public void guardarTodos(List<Paciente> pacientes) {
+       public void guardarTodos(List<Cita> citas) {
         try (FileWriter writer = new FileWriter(ARCHIVO_JSON)) {
-            gson.toJson(pacientes, writer);
+            gson.toJson(citas, writer);
         } catch (IOException e) {
-            System.err.println("Error al guardar Paciente : " + e.getMessage());
+            System.err.println("Error al guardar Cita : " + e.getMessage());
         }
     }
-     public boolean eliminarPaciente(String numeroDocumento) {
+     public boolean eliminarCita(String idCita) {
     try {
-        if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
-            throw new IllegalArgumentException("Número de documento no puede ser nulo o vacío");
+        if (idCita == null || idCita.trim().isEmpty()) {
+            throw new IllegalArgumentException("id Cita  no puede ser nulo o vacío");
         }
+         List<Cita> citas = cargarTodos();
 
-        List<Paciente> pacientes = cargarTodos();
-
-        boolean removed = pacientes.removeIf(m -> 
-            numeroDocumento.equals(m.getNumeroDocumento())
+        boolean removed = citas.removeIf(m -> 
+            idCita.equals(m.getIdCita())
         );
         
         if (removed) {
-            guardarTodos(pacientes);
-            System.out.println("Paciente con documento " + numeroDocumento + " eliminado.");
+            guardarTodos(citas);
+            System.out.println("Cita con id cita  " + idCita + " eliminado.");
         }
         
         return removed;
@@ -76,13 +77,13 @@ public class PacienteDAO {
         return false;
     }     
 }
-       public boolean actualizarPaciente(String documentoOriginal, Paciente pacienteActualizado) {
+       public boolean actualizarCita(String citaOriginal, Cita citaActualizada) {
     try {
-        List<Paciente> pacientes = cargarTodos();
-        for (int i = 0; i < pacientes.size(); i++) {
-            if (pacientes.get(i).getNumeroDocumento().equals(documentoOriginal)) {
-                pacientes.set(i, pacienteActualizado);
-                guardarTodos(pacientes);
+        List<Cita> citas = cargarTodos();
+        for (int i = 0; i < citas.size(); i++) {
+            if (citas.get(i).getIdCita().equals(citaOriginal)) {
+                citas.set(i, citaActualizada);
+                guardarTodos(citas);
                 return true;
             }
         }
@@ -119,4 +120,4 @@ public class PacienteDAO {
             }
         }
     }
-} 
+}

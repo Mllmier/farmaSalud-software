@@ -5,14 +5,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Cita {
+    private  String idCita;
     private LocalDate fechaCita;
-    private LocalTime hora;
+    private String hora;
     private String tipoCita;
     private String consultorio;
     private String motivo;
     private EstadoCita estado;
     private Paciente paciente;
-    //private Doctor doctor;
+    private Medico medico;
 
     public enum EstadoCita {
         PROGRAMADA,
@@ -20,13 +21,29 @@ public class Cita {
         CANCELADA
     }
 
-    public Cita(LocalDate fechaCita, LocalTime hora, Paciente paciente /*Doctor doctor*/) {
+    public Cita(String idCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio, Paciente paciente,EstadoCita estado,Medico medico ) {
+        
+        this.idCita=idCita;
+        this.motivo=motivo;
         this.fechaCita = fechaCita;
         this.hora = hora;
         this.paciente = paciente;
+        this.tipoCita=tipoCita;
+        this.medico=medico;
+        this.motivo=motivo;
+        this.consultorio=consultorio;
         //this.doctor = doctor;
         this.estado = EstadoCita.PROGRAMADA;
     }
+
+    public String getIdCita() {
+        return idCita;
+    }
+
+    public void setIdCita(String idCita) {
+        this.idCita = idCita;
+    }
+    
 
     public LocalDate getFechaCita() {
         return fechaCita;
@@ -36,11 +53,11 @@ public class Cita {
         this.fechaCita = fechaCita;
     }
 
-    public LocalTime getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
@@ -83,6 +100,16 @@ public class Cita {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+    
+    
 
     
 }
