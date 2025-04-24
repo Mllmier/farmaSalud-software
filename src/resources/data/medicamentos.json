@@ -1,3 +1,35 @@
-{
-    "name": "Maria liz"
-}
+[
+  {
+    "idMedicamento": "Med.001",
+    "nombre": "Acetaminofen",
+    "descripcion": "para todos los dolores",
+    "laboratorio": "Genfar",
+    "cantidad": "2000",
+    "lote": "2025-04-04",
+    "fechaVencimiento": "2027-04-04",
+    "disponible": "Si",
+    "precio": "600000"
+  },
+  {
+    "idMedicamento": "Med.002",
+    "nombre": "Ibuprofeno",
+    "descripcion": "Alivia dolores de cabeza",
+    "laboratorio": "Bayer",
+    "cantidad": "2000",
+    "lote": "2025-03-04",
+    "fechaVencimiento": "2027-03-04",
+    "disponible": "Si",
+    "precio": "1400000"
+  },
+  {
+    "idMedicamento": "Med.003",
+    "nombre": "Enalapril",
+    "descripcion": "Controla la precion",
+    "laboratorio": "MK",
+    "cantidad": "2000",
+    "lote": "2025-03-04",
+    "fechaVencimiento": "2027-03-04",
+    "disponible": "Si",
+    "precio": "4000000"
+  }
+]
