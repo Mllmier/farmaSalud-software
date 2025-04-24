@@ -4,6 +4,7 @@
  */
 package farmasalud.view;
 
+import Controller.ControllerFarmaceutica;
 import dao.MedicamentosDAO;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -26,298 +28,57 @@ import javax.swing.JTable;
  */
 public class Farmaceutica extends javax.swing.JFrame {
     
-  private DefaultTableModel tableModel;
-  private DefaultTableModel tablaModelMedicamento = new DefaultTableModel();
-  private String codMedicamento;
-  private MedicamentosDAO medicamentoDAO = new MedicamentosDAO();
-  
-  
-    public Farmaceutica() throws IOException {
+ 
+private ControllerFarmaceutica controller;
+    
+    public Farmaceutica() throws IOException  {
         initComponents();
-        setupTableModelMedicamentos();
-        cargarDatosMedicamentos();
+        controller = new ControllerFarmaceutica(this);
+        configurarControllerFarmaceutica();
+        configurarListeners();
+       
+        
+    }
+    
+    private void configurarControllerFarmaceutica() throws IOException{
+    
+        controller.setTabladeMedicamentos(TabladeMedicamentos);
+        controller.setTxtCodMedicamento(txtCodMedicamento);
+        controller.setTxtMedicamento(txtMedicamento);
+        controller.setTxtDescripcion(txtDescripcion);
+        controller.setTxtLaboratorio(txtLaboratorio);
+        controller.setTxtCantidad(txtCantidad);
+        controller.setTxtLote(txtLote);
+        controller.setTxtFechaVencimiento(txtFechaVencimiento);
+        controller.setCbDisponible(cbDisponible);
+        controller.setTxtPrecio(txtPrecio);
+        
+        controller.setupTableModelMedicamentos();
+        controller.cargarDatosMedicamentos();
         txtCodMedicamento.setEditable(false);
-        
-        
-         TabladeMedicamentos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                   cargarDatosEnTablaMedicamentos();
-                }
-            }
-        });
-        
-    }
-    private void cargarDatosMedicamentos() throws IOException{
-     tablaModelMedicamento.setRowCount(0);
-     List<Medicamento>medicamentos = medicamentoDAO.cargarTodos();
-     
-     for(Medicamento medicamento : medicamentos){
-       Object[]row = {
-          medicamento.getIdMedicamento(),
-          medicamento.getNombre(),
-          medicamento.getDescripcion(),
-          medicamento.getLaboratorio(),
-          medicamento.getCantidad(),
-          medicamento.getLote(),
-          medicamento.getFechaVencimiento(),
-          medicamento.getDisponible(),
-          medicamento.getPrecio()
-       };
-       tablaModelMedicamento.addRow(row);
-     }
     }
     
+    private void configurarListeners(){
+      TabladeMedicamentos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            controller.cargarDatosEnTablaMedicamentos(); // Nombre correcto
+        }
+    }
+       });
+    } 
     
-    private void setupTableModelMedicamentos(){
-     tablaModelMedicamento = new DefaultTableModel(
-      new Object[]{"codMedicamento","Nombre","Descripcion","Laboratorio","Cantidad","Lote","Fecha Vencimiento","Disponible","Precio"},0){
-                  @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if ( columnIndex == 9) return LocalDate.class;
-                return String.class;
-            }
-      };
-     TabladeMedicamentos.setModel(tablaModelMedicamento);
-    }
     
-    private void cargarDatosEnTablaMedicamentos() {
-    int filaSeleccionada = TabladeMedicamentos.getSelectedRow();
-    if (filaSeleccionada == -1) {
-        return;
-    }
-
-    try {
-        // Verificar y obtener cada valor de la tabla
-        Object codMedicamentoObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 0);
-        Object nombreObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 1);
-        Object descripcionObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 2);
-        Object laboratorioObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 3);
-        Object cantidadObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 4);
-        Object loteObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 5);
-        Object fechaVencimientoObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 6);
-        Object disponibleObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 7);
-        Object precioObj = tablaModelMedicamento.getValueAt(filaSeleccionada, 8);
-
-        // Convertir a String, manejando valores nulos
-        String codMedicamento = (codMedicamentoObj != null) ? codMedicamentoObj.toString() : "";
-        String nombre = (nombreObj != null) ? nombreObj.toString() : "";
-        String descripcion = (descripcionObj != null) ? descripcionObj.toString() : "";
-        String laboratorio = (laboratorioObj != null) ? laboratorioObj.toString() : "";
-        String cantidad = (cantidadObj != null) ? cantidadObj.toString() : "";
-        String lote = (loteObj != null) ? loteObj.toString() : "";
-        String fechaVencimiento = (fechaVencimientoObj != null) ? fechaVencimientoObj.toString() : "";
-        String disponible = (disponibleObj != null) ? disponibleObj.toString() : "";
-        String precio = (precioObj != null) ? precioObj.toString() : "";
-
-        // Asignar los valores a los campos de texto
-        txtCodMedicamento.setText(codMedicamento);
-        txtCodMedicamento.setEditable(false);
-        txtMedicamento.setText(nombre);
-        txtDescripcion.setText(descripcion);
-        txtLaboratorio.setText(laboratorio);
-        txtCantidad.setText(cantidad);
-        txtLote.setText(lote);
-        txtFechaVencimiento.setText(fechaVencimiento);
-        cbDisponible.setSelectedItem(disponible);
-        txtPrecio.setText(precio);
-
-        
-         this.codMedicamento = codMedicamento;
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-            "Error al cargar datos del medicamento: " + e.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-    }
-}
     
-    private void guardarMedicamentoDesdeFormulario(){
-     try{
-       String codmedicamento = medicamentoDAO.generarCodigoUnico();
-       String nombres = txtMedicamento.getText().trim();
-       String descripciones = txtDescripcion.getText().trim();
-       String laboratorios = txtLaboratorio.getText().trim();
-       String cantidades = txtCantidad.getText().trim();
-       String fechStr = txtLote.getText().trim();
-       String fechaStr = txtFechaVencimiento.getText().trim();
-       String disponibles = cbDisponible.getSelectedItem().toString();
-       String precios = txtPrecio.getText().trim();
-       
-       if ( nombres.isEmpty() || descripciones.isEmpty() || cantidades.isEmpty() ||
-           fechStr.isEmpty() || fechaStr.isEmpty() || disponibles.isEmpty() || precios.isEmpty()){
-        JOptionPane.showMessageDialog(this,
-                        "Todos los campos son obligatorios",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-       }
-       
-       txtCodMedicamento.setText(codmedicamento);
-       
-       LocalDate lote;
-       
-            try {
-                lote = LocalDate.parse(fechStr);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Formato de fecha inválido. Usa YYYY-MM-DD",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            LocalDate fechaVencimiento;
-            try {
-                fechaVencimiento = LocalDate.parse(fechaStr);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Formato de fecha inválido. Usa YYYY-MM-DD",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            Medicamento nuevoMedicamento = new Medicamento( 
-             codmedicamento,
-             nombres,
-             descripciones,
-             laboratorios,
-             cantidades,
-                    lote,
-                    fechaVencimiento,
-             disponibles,
-             precios
-             );
-            medicamentoDAO.guardarMedicamento(nuevoMedicamento);
-            JOptionPane.showMessageDialog(this,
-                    "Medicamento guardado exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            limpiarFormulario();
-            cargarDatosMedicamentos();
-
-     }catch(Exception e){
-       JOptionPane.showMessageDialog(this,
-                    "Error al guardar medicamento: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-     }
-    }
+    
     
    
     
-    private void actualizarMedicamento(){
-      try{
-        String codmedicamentos = this.codMedicamento;
-        String nombres = txtMedicamento.getText().trim();
-        String descripciones = txtDescripcion.getText().trim();
-        String laboratorios = txtLaboratorio.getText().trim();
-        String cantidades = txtCantidad.getText().trim();
-        String lotes = txtLote.getText().trim();
-        String fechasvencimientos = txtFechaVencimiento.getText().trim();
-        String disponibles = cbDisponible.getSelectedItem().toString();
-        String precios = txtPrecio.getText().trim();
-        
-        if (codmedicamentos.isEmpty() || nombres.isEmpty() || descripciones.isEmpty() || cantidades.isEmpty() ||
-           lotes.isEmpty() || fechasvencimientos.isEmpty() || disponibles.isEmpty() || precios.isEmpty()){
-        JOptionPane.showMessageDialog(this,
-                        "Todos los campos son obligatorios",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-       }
-          LocalDate lote;
-       
-            try {
-                lote = LocalDate.parse(lotes);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Formato de fecha inválido. Usa YYYY-MM-DD",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            LocalDate fechaVencimiento;
-            try {
-                fechaVencimiento = LocalDate.parse(fechasvencimientos);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Formato de fecha inválido. Usa YYYY-MM-DD",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        Medicamento medicamentoActualizado = new Medicamento(
-         codmedicamentos,nombres,descripciones,laboratorios,
-         cantidades,lote,fechaVencimiento,disponibles,precios
-        );
-        
-        boolean actualizado = medicamentoDAO.actualizarMedicamento(codMedicamento,medicamentoActualizado);
-        
-          if (actualizado) {
-              JOptionPane.showMessageDialog(this,
-                    "Medicamento actualizado exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-                
-                cargarDatosEnTablaMedicamentos();
-                limpiarFormulario();
-          }
-      }catch(Exception e){
-       JOptionPane.showMessageDialog(this,
-                "Error al actualizar medicamento: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-      }
-    }
+   
     
-    private void eliminaraMedicamentoSeleccionado(){
-     int filaSeleccionada = TabladeMedicamentos.getSelectedRow();
-      if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un medicamento de la tabla para eliminar.", "Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-      String codMedicamento = (String ) tablaModelMedicamento.getValueAt(filaSeleccionada,0);
-      String nombre = (String) tablaModelMedicamento.getValueAt(filaSeleccionada, 1);
-      
-      int confirmacion = JOptionPane.showConfirmDialog(
-                this, 
-                "¿Está seguro que desea eliminar el medicaemnto:\n" +
-        "Nombre: " + nombre + "\n" +
-        "Código: " + codMedicamento + "?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE
-        );
-      
-      if (confirmacion == JOptionPane.YES_OPTION) {
-            boolean eliminado = medicamentoDAO.eliminarMedicamento(codMedicamento);
-            if (eliminado) {
-                JOptionPane.showMessageDialog(this, "Medicamento eliminado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cargarDatosEnTablaMedicamentos();
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontró el medicamento.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-   private void limpiarFormulario(){
-      txtCodMedicamento.setText("");
-      txtCodMedicamento.setEditable(false);
-      txtMedicamento.setText("");
-      txtDescripcion.setText("");
-      txtLaboratorio.setText("");
-      txtCantidad.setText("");
-      txtLote.setText("");
-      txtFechaVencimiento.setText("");
-      cbDisponible.setSelectedIndex(0);
-      txtPrecio.setText("");
-    }
+   
+  
     
   
     
@@ -748,6 +509,11 @@ public class Farmaceutica extends javax.swing.JFrame {
         jPanel14.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
         txtMedicamento.setBorder(null);
+        txtMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMedicamentoKeyTyped(evt);
+            }
+        });
         jPanel14.add(txtMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 120, -1));
 
         jLabel17.setText("Descripcion:");
@@ -757,6 +523,11 @@ public class Farmaceutica extends javax.swing.JFrame {
         txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDescripcionActionPerformed(evt);
+            }
+        });
+        txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyTyped(evt);
             }
         });
         jPanel14.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 120, -1));
@@ -773,9 +544,19 @@ public class Farmaceutica extends javax.swing.JFrame {
                 txtLaboratorioActionPerformed(evt);
             }
         });
+        txtLaboratorio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLaboratorioKeyTyped(evt);
+            }
+        });
         jPanel14.add(txtLaboratorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 120, -1));
 
         txtCantidad.setBorder(null);
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
         jPanel14.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 120, -1));
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
@@ -862,6 +643,11 @@ public class Farmaceutica extends javax.swing.JFrame {
         jPanel14.add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 120, 10));
 
         txtPrecio.setBorder(null);
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
         jPanel14.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 120, -1));
 
         jSeparator16.setForeground(new java.awt.Color(0, 0, 0));
@@ -984,32 +770,70 @@ public class Farmaceutica extends javax.swing.JFrame {
 
     private void jPanel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel15MouseClicked
         // TODO add your handling code here:
-        guardarMedicamentoDesdeFormulario();
-        cargarDatosEnTablaMedicamentos();
+       controller.guardarMedicamentoDesdeFormulario();
+       
     }//GEN-LAST:event_jPanel15MouseClicked
 
     private void jPanel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel16MouseClicked
         // TODO add your handling code here:
-        actualizarMedicamento();
-         try {
-          cargarDatosMedicamentos();
-      } catch (IOException ex) {
-          Logger.getLogger(Farmaceutica.class.getName()).log(Level.SEVERE, null, ex);
-      }
-         limpiarFormulario();
+        controller.actualizarMedicamento();
+        
     }//GEN-LAST:event_jPanel16MouseClicked
 
     private void jPanel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel17MouseClicked
         // TODO add your handling code here:
-        eliminaraMedicamentoSeleccionado();
-        actualizarMedicamento();
-      try {
-          cargarDatosMedicamentos();
-      } catch (IOException ex) {
-          Logger.getLogger(Farmaceutica.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      limpiarFormulario();
+       controller.eliminaraMedicamentoSeleccionado();
+       
     }//GEN-LAST:event_jPanel17MouseClicked
+
+    private void txtMedicamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedicamentoKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+   
+    if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+        evt.consume();
+        JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    }//GEN-LAST:event_txtMedicamentoKeyTyped
+
+    private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
+        // TODO add your handling code here:
+         char c=evt.getKeyChar();
+   
+    if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+        evt.consume();
+        JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    }//GEN-LAST:event_txtDescripcionKeyTyped
+
+    private void txtLaboratorioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLaboratorioKeyTyped
+        // TODO add your handling code here:
+         char c=evt.getKeyChar();
+   
+    if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+        evt.consume();
+        JOptionPane.showMessageDialog(null, "Solo se permiten letras", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    }//GEN-LAST:event_txtLaboratorioKeyTyped
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+      if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE && c != '.') {
+    evt.consume();
+    JOptionPane.showMessageDialog(null, "Solo se permiten números", "Error", JOptionPane.WARNING_MESSAGE);
+}
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+      if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE && c != '.') {
+    evt.consume();
+    JOptionPane.showMessageDialog(null, "Solo se permiten números", "Error", JOptionPane.WARNING_MESSAGE);
+}
+    }//GEN-LAST:event_txtPrecioKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1041,12 +865,16 @@ public class Farmaceutica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
+                
                 try {
                     new Farmaceutica().setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(Farmaceutica.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+                }
+                
+            
         });
     }
 
