@@ -777,6 +777,11 @@ private ControllerFarmaceutica controller;
     private void jPanel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel16MouseClicked
         // TODO add your handling code here:
         controller.actualizarMedicamento();
+    try {
+        controller.cargarDatosMedicamentos();
+    } catch (IOException ex) {
+        Logger.getLogger(Farmaceutica.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
     }//GEN-LAST:event_jPanel16MouseClicked
 

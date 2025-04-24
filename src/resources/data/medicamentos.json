@@ -20,5 +20,16 @@
     "fechaVencimiento": "2027-03-04",
     "disponible": "Si",
     "precio": "1400000"
+  },
+  {
+    "idMedicamento": "Med.003",
+    "nombre": "Enalapril",
+    "descripcion": "Controla la precion",
+    "laboratorio": "MK",
+    "cantidad": "2000",
+    "lote": "2025-03-04",
+    "fechaVencimiento": "2027-03-04",
+    "disponible": "Si",
+    "precio": "4000000"
   }
 ]
