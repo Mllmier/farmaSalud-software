@@ -34,9 +34,4 @@ public class Paciente extends Persona {
     public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
-    
-
-    
- 
-    
 }

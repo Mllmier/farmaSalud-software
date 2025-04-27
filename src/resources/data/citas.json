@@ -1,3 +1,35 @@
-{
-    
-}
+[
+  {
+    "IdCita": "j0980TextField2",
+    "fechaCita": "2000-09-09",
+    "hora": "08:30",
+    "tipoCita": "General",
+    "consultorio": "Consultorio 4",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "20000",
+    "especialidad": "General"
+  },
+  {
+    "IdCita": "090099xtField2",
+    "fechaCita": "2000-07-07",
+    "hora": "09:00",
+    "tipoCita": "Oftamologia",
+    "consultorio": "Consultorio 3",
+    "motivo": "Prevencion",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "1234567890",
+    "especialidad": "Oftamologia"
+  },
+  {
+    "IdCita": "09",
+    "fechaCita": "2000-09-09",
+    "hora": "08:00",
+    "tipoCita": "Pediatria",
+    "consultorio": "Consultorio 4",
+    "motivo": "Seguimiento",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "1234567890",
+    "especialidad": "Ginecologico"
+  }
+]

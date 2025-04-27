@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -276,16 +277,7 @@ public class ControllerPaciente {
                 return;
             }
 
-         boolean existe = pacienteDAO.cargarTodos().stream()
-    .anyMatch(p -> p.getNumeroDocumento() != null && p.getNumeroDocumento().equals(documento));
-                if (existe) {
-                    JOptionPane.showMessageDialog(null,
-                        "Ya existe un paciente con este documento",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-                
-            }
+ 
 
             Paciente pacienteActualizado = new Paciente(
                     documento, 
@@ -300,8 +292,8 @@ public class ControllerPaciente {
                     tipoSangre
             );
 
-         boolean actualizado = pacienteDAO.cargarTodos().stream()
-    .anyMatch(p -> p.getNumeroDocumento() != null && p.getNumeroDocumento().equals(documento));
+               boolean actualizado = pacienteDAO.actualizarPaciente(documentoOriginal, pacienteActualizado);
+
             if (actualizado) {
                 JOptionPane.showMessageDialog(null,
                     "Paciente actualizado exitosamente",
@@ -342,5 +334,8 @@ public class ControllerPaciente {
             documentoOriginal = txtDocumentoR.getText();
         }
     }
+  
+    
+   
 }
 

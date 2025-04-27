@@ -1,15 +1,26 @@
 [
-
   {
     "tipoSangre": "B+",
     "tipoDocumento": "CC",
-    "numeroDocumento": "12222222222",
-    "nombres": "bhfbf",
-    "apellidos": "hdbvkdbv",
+    "numeroDocumento": "1234567890",
+    "nombres": "tatiana",
+    "apellidos": "figueroa",
     "fechaNacimiento": "2000-09-09",
     "sexo": "M",
     "eps": "Comfamiliar",
     "email": "dfj@gmail.com",
+    "celular": "1234567890"
+  },
+  {
+    "tipoSangre": "O-",
+    "tipoDocumento": "TI",
+    "numeroDocumento": "20000",
+    "nombres": "mono",
+    "apellidos": "too",
+    "fechaNacimiento": "2000-09-09",
+    "sexo": "F",
+    "eps": "Sanistas",
+    "email": "jfvnjf@gmail.com",
     "celular": "1234567890"
   }
 ]

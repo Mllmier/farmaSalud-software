@@ -23,6 +23,7 @@ public class Persona {
         this.sexo=sexo;
         this.fechaNacimiento=fechaNacimiento;
         this.email=email;
+        
     }
 
     public String getNombres() {
@@ -98,9 +99,5 @@ public class Persona {
         this.numeroDocumento = numeroDocumento;
     }
 
-    
-    
-    public String getNombreCompleto() {
-        return nombres + " " + apellidos;
-    }
+     
 }

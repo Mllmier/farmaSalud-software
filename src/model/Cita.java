@@ -1,47 +1,58 @@
 package model;
 
-import farmasalud.view.Paciente;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Cita {
-    private  String idCita;
+    private  String IdCita;
     private LocalDate fechaCita;
     private String hora;
     private String tipoCita;
     private String consultorio;
     private String motivo;
     private EstadoCita estado;
-    private Paciente paciente;
-    private Medico medico;
+    private String documentoPaciente;
+    
+    private String  especialidad;
 
     public enum EstadoCita {
         PROGRAMADA,
         COMPLETADA,
-        CANCELADA
+        CANCELADA;
+        
+        public static EstadoCita getPROGRAMADA() {
+            return PROGRAMADA;
+        }
+
+        public static EstadoCita getCOMPLETADA() {
+            return COMPLETADA;
+        }
+
+        public static EstadoCita getCANCELADA() {
+            return CANCELADA;
+        }
     }
 
-    public Cita(String idCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio, Paciente paciente,EstadoCita estado,Medico medico ) {
+    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio,EstadoCita estado,String  especialidad ) {
         
-        this.idCita=idCita;
+        this.IdCita=IdCita;
         this.motivo=motivo;
         this.fechaCita = fechaCita;
         this.hora = hora;
-        this.paciente = paciente;
         this.tipoCita=tipoCita;
-        this.medico=medico;
+        this.especialidad=especialidad;
         this.motivo=motivo;
         this.consultorio=consultorio;
-        //this.doctor = doctor;
         this.estado = EstadoCita.PROGRAMADA;
     }
+    
 
     public String getIdCita() {
-        return idCita;
+        return IdCita;
     }
 
     public void setIdCita(String idCita) {
-        this.idCita = idCita;
+        this.IdCita = idCita;
     }
     
 
@@ -92,24 +103,19 @@ public class Cita {
     public void setEstado(EstadoCita estado) {
         this.estado = estado;
     }
-
-    public Paciente getPaciente() {
-        return paciente;
+    public String getMedico() {
+        return especialidad;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setMedico(String  especialidad) {
+        this.especialidad = especialidad;
+    } 
+
+    public String getDocumentoPaciente() {
+        return documentoPaciente;
     }
 
-    public Medico getMedico() {
-        return medico;
+    public void setDocumentoPaciente(String documentoPaciente) {
+        this.documentoPaciente = documentoPaciente;
     }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-    
-    
-
-    
 }
