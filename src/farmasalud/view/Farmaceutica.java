@@ -37,7 +37,7 @@ private ControllerFarmaceutica controller;
         controller = new ControllerFarmaceutica(this);
         configurarControllerFarmaceutica();
         configurarListeners();
-        buscar();
+       
        
         
     }
@@ -72,9 +72,7 @@ private ControllerFarmaceutica controller;
     } 
     
     
-    private void buscar(){
-      String  documento = txtDocumentoR.getText(); 
-    }
+    
     
     
    
@@ -133,7 +131,7 @@ private ControllerFarmaceutica controller;
         jPanel19 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaEntrega = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -445,8 +443,8 @@ private ControllerFarmaceutica controller;
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaEntrega.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        TablaEntrega.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -457,7 +455,7 @@ private ControllerFarmaceutica controller;
                 "Nombre", "Apellido", "Cod. Medicamento", "Medicamento", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaEntrega);
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 640, 500));
 
@@ -894,6 +892,7 @@ private ControllerFarmaceutica controller;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaEntrega;
     private javax.swing.JTable TabladeMedicamentos;
     private javax.swing.JComboBox<String> cbDisponible;
     private javax.swing.JButton jButton1;
@@ -965,7 +964,6 @@ private ControllerFarmaceutica controller;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
