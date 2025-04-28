@@ -128,11 +128,11 @@ public class CitasDAO {
         return false;
     }     
 }
-       public boolean actualizarCita(String citaOriginal, Cita citaActualizada) {
+     public boolean actualizarCita(String idCitaOriginal, Cita citaActualizada) {
     try {
         List<Cita> citas = cargarTodos();
         for (int i = 0; i < citas.size(); i++) {
-            if (citas.get(i).getIdCita().equals(citaOriginal)) {
+            if (citas.get(i).getIdCita().equals(idCitaOriginal)) {
                 citas.set(i, citaActualizada);
                 guardarTodos(citas);
                 return true;
@@ -143,6 +143,7 @@ public class CitasDAO {
         e.printStackTrace();
         return false;
     }
+
 }
    
   public class LocalDateAdapter extends TypeAdapter<LocalDate> {

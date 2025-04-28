@@ -48,6 +48,14 @@ public class ControllerCitas {
     private JComboBox<String> cboConsultorio;
     private DefaultTableModel tableModelPaciente;
     private JTable tablePaciente;
+    private JTextField txtIdCita2;
+    private JTextField txtFechaCita2;
+     private JComboBox<String> cboHoraCita2;
+    private JComboBox<String> cboEstadoCita2;
+    private JComboBox<String> cboTipoCita2;
+    private JComboBox<String> cboMotivoCita2;
+    private JComboBox<String> cboConsultorio2;
+    private JComboBox<String> cboMedicoCita2;
   
     
 
@@ -87,7 +95,34 @@ public class ControllerCitas {
     public void setCboMotivoCita(JComboBox<String> cboMotivoCita) {
         this.cboMotivoCita = cboMotivoCita;
     } 
-     
+     public void setTxtIdCita2(JTextField txtIdCita2) {
+        this.txtIdCita2 = txtIdCita2;
+    } 
+     public void setTxtFechaCita2(JTextField txtFechaCita2) {
+        this.txtFechaCita2 = txtFechaCita2;
+    }  
+     public void setCboHoraCita2(JComboBox<String> cboHoraCita2) {
+        this.cboHoraCita2 = cboHoraCita2;
+    }
+    
+    public void setCboEstadoCita2(JComboBox<String> cboEstadoCita2) {
+        this.cboEstadoCita2 = cboEstadoCita2;
+    }
+    
+    public void setCboTipoCita2(JComboBox<String> cboTipoCita2) {
+        this.cboTipoCita2 = cboTipoCita2;
+    }
+    
+    public void setCboConsultorio2(JComboBox<String> cboConsultorio2) {
+        this.cboConsultorio2 = cboConsultorio2;
+    }
+     public void setCboMotivoCita2(JComboBox<String> cboMotivoCita2) {
+        this.cboMotivoCita2 = cboMotivoCita2;
+    } 
+     public void setCboMedicoCita2(JComboBox<String> cboMedicoCita2) {
+    this.cboMedicoCita2 = cboMedicoCita2;
+}
+    
 
     
     public void guardarCitaDesdeFormulario() {
@@ -147,6 +182,7 @@ public class ControllerCitas {
             citasDAO.guardarCita(nuevaCita);
             JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           cargarCitasEnTabla();
+          limpiarCita();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al guardar cita: " + e.getMessage(),
                 "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -249,7 +285,101 @@ public void cargarPacienteEnTabla() {
         }
     }
 }
+    public void actualizarCita() {
+    try {
+        int filaSeleccionada = tablaCitas.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, 
+                "Seleccione una cita de la tabla para actualizar", 
+                "Error", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
+        // Obtener el ID original de la cita seleccionada
+        String idCitaOriginal = tablaCitas.getValueAt(filaSeleccionada, 5).toString();
+
+        String idCita = txtIdCita2.getText().trim();
+        String fechaStr = txtFechaCita2.getText().trim();
+        String horaCita = cboHoraCita2.getSelectedItem().toString();
+        String motivo = cboMotivoCita2.getSelectedItem().toString();
+        String tipo = cboTipoCita2.getSelectedItem().toString();
+        String consultorio = cboConsultorio2.getSelectedItem().toString();
+        EstadoCita estado = EstadoCita.valueOf(cboEstadoCita2.getSelectedItem().toString());   
+        String especialidad = cboMedicoCita2.getSelectedItem().toString();
+
+        if (fechaStr.isEmpty() || horaCita.isEmpty() || motivo.isEmpty() || 
+            tipo.isEmpty() || consultorio.isEmpty() || especialidad.equals("<Seleccione>")) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        LocalDate fechaCita;
+        try {
+            fechaCita = LocalDate.parse(fechaStr);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null,
+                "Formato de fecha inválido. Usa YYYY-MM-DD",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Cita citaActualizada = new Cita(
+            idCita, 
+            fechaCita, 
+            horaCita, 
+            motivo, 
+            tipo, 
+            consultorio,
+            estado, 
+            especialidad
+        );
+        
+        // Mantener el mismo paciente asociado
+        String documentoPaciente = tablaCitas.getValueAt(filaSeleccionada, 0).toString();
+        citaActualizada.setDocumentoPaciente(documentoPaciente);
+
+        boolean actualizado = citasDAO.actualizarCita(idCitaOriginal, citaActualizada);
+       limpiarCita2() ;
+        if (actualizado) {
+            JOptionPane.showMessageDialog(null,
+                "Cita actualizada exitosamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+            cargarCitasEnTabla();
+        } else {
+            JOptionPane.showMessageDialog(null,
+                "No se pudo actualizar la cita. Verifique los datos.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+            "Error al actualizar cita: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+   }
+    public void limpiarCita() {
+        txtIdCita.setText("");
+        txtFechaCita.setText("");
+        cboHoraCita.setSelectedIndex(0);
+        cboMedicoCita.setSelectedIndex(0);
+        cboMotivoCita.setSelectedIndex(0);
+        cboConsultorio.setSelectedIndex(0);
+        cboTipoCita.setSelectedIndex(0);
+    }
+    public void limpiarCita2() {
+        txtIdCita2.setText("");
+        txtFechaCita2.setText("");
+        cboHoraCita2.setSelectedIndex(0);
+        cboMedicoCita2.setSelectedIndex(0);
+        cboMotivoCita2.setSelectedIndex(0);
+        cboConsultorio2.setSelectedIndex(0);
+        cboTipoCita2.setSelectedIndex(0);
+    }
 }
      
 
