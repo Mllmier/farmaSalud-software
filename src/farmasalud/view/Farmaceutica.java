@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import java.awt.event.KeyEvent;
 
+
 /**
  *
  * @author HP
@@ -36,6 +37,7 @@ private ControllerFarmaceutica controller;
         controller = new ControllerFarmaceutica(this);
         configurarControllerFarmaceutica();
         configurarListeners();
+        buscar();
        
         
     }
@@ -70,7 +72,9 @@ private ControllerFarmaceutica controller;
     } 
     
     
-    
+    private void buscar(){
+      String  documento = txtDocumentoR.getText(); 
+    }
     
     
    
@@ -100,6 +104,9 @@ private ControllerFarmaceutica controller;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -110,9 +117,6 @@ private ControllerFarmaceutica controller;
         jLabel8 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jSeparator4 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
@@ -126,8 +130,14 @@ private ControllerFarmaceutica controller;
         jLabel13 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel30 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -307,17 +317,18 @@ private ControllerFarmaceutica controller;
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 660));
 
         jPanel3.setBackground(new java.awt.Color(10, 92, 184));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1080, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 110, Short.MAX_VALUE)
-        );
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Farma Salud");
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 26, 149, 54));
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("\"Tu bienestar, nuestra prioridad.\"  ");
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 30, -1, -1));
+        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 110, 80));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 1080, 110));
 
@@ -366,22 +377,8 @@ private ControllerFarmaceutica controller;
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         jPanel11.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 150, 10));
 
-        jLabel9.setText("Telefono:");
-        jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
-
-        jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 150, -1));
-
-        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel11.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 150, 10));
-
         jLabel10.setText("Cod. Medicamento:");
-        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 156, -1, 30));
+        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 30));
 
         jTextField4.setBorder(null);
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -389,22 +386,22 @@ private ControllerFarmaceutica controller;
                 jTextField4ActionPerformed(evt);
             }
         });
-        jPanel11.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 150, -1));
+        jPanel11.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 150, -1));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel11.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 150, 10));
+        jPanel11.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 150, 10));
 
         jLabel11.setText("Medicamento:");
-        jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         jTextField5.setBorder(null);
-        jPanel11.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 150, -1));
+        jPanel11.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 150, -1));
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel11.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 150, 10));
+        jPanel11.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 150, 10));
 
         jLabel12.setText("Cantidad:");
-        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, -1, -1));
 
         jTextField6.setBorder(null);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
@@ -412,78 +409,79 @@ private ControllerFarmaceutica controller;
                 jTextField6ActionPerformed(evt);
             }
         });
-        jPanel11.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 150, -1));
+        jPanel11.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 150, -1));
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel11.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 150, 10));
+        jPanel11.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 150, 10));
 
         jPanel12.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setText("Modificar");
+        jPanel12.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 6, -1, 34));
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
-                .addComponent(jLabel13)
-                .addGap(112, 112, 112))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
-        jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 310, 50));
+        jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 310, 50));
 
         jPanel13.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setText("Eliminar");
+        jPanel13.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 6, -1, 38));
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
-                .addComponent(jLabel14)
-                .addGap(119, 119, 119))
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 310, 50));
 
-        jPanel11.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 310, 50));
+        jPanel19.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel5.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 360, 500));
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel27.setText("Entregar");
+        jPanel19.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 17, -1, -1));
+
+        jPanel11.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 310, 50));
+
+        jPanel5.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 360, 430));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido", "Telefono", "Cod. Medicamento", "Medicamento", "Cantidad"
+                "Nombre", "Apellido", "Cod. Medicamento", "Medicamento", "Cantidad"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 640, 500));
+
+        jLabel9.setText("Consultar:");
+        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+        jPanel5.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 150, -1));
+
+        jButton1.setBackground(new java.awt.Color(10, 92, 184));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Buscar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
+
+        jLabel30.setText("Numero de Documento");
+        jPanel5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
         jTabbedPane1.addTab("Entrega", jPanel5);
 
@@ -760,10 +758,6 @@ private ControllerFarmaceutica controller;
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
@@ -840,6 +834,22 @@ private ControllerFarmaceutica controller;
 }
     }//GEN-LAST:event_txtPrecioKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -886,6 +896,7 @@ private ControllerFarmaceutica controller;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabladeMedicamentos;
     private javax.swing.JComboBox<String> cbDisponible;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -905,7 +916,12 @@ private ControllerFarmaceutica controller;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -922,6 +938,7 @@ private ControllerFarmaceutica controller;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -942,7 +959,6 @@ private ControllerFarmaceutica controller;
     private javax.swing.JSeparator jSeparator16;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
