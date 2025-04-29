@@ -8,14 +8,16 @@ import java.util.List;
 public class Paciente extends Persona {
     private String tipoSangre;
     private String tipoDocumento;
+    private String Antecendentes;
 
-    public Paciente( String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String tipoDocumento,String tipoSangre) {
+    public Paciente( String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String tipoDocumento,String tipoSangre,String Antecendentes) {
         super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular);
          if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) {
         throw new IllegalArgumentException("El número de documento no puede ser nulo o vacío");
     }
         this.tipoDocumento=tipoDocumento;
         this.tipoSangre = tipoSangre;
+        this.Antecendentes=Antecendentes;
        
     }
 
@@ -34,4 +36,13 @@ public class Paciente extends Persona {
     public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
+
+    public String getAntecendentes() {
+        return Antecendentes;
+    }
+
+    public void setAntecendentes(String Antecendentes) {
+        this.Antecendentes = Antecendentes;
+    }
+    
 }

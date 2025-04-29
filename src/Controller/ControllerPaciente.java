@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Paciente;
@@ -37,6 +38,8 @@ public class ControllerPaciente {
     private JComboBox<String> cbEps;
     private JComboBox<String> cbTipoDocumento;
     private JComboBox<String> cboTipoSangre;
+    private JTextArea txtAreaAntecedente;
+    
      public void setTablaPacientes(JTable tablaPacientes) {
         this.tablaPacientes = tablaPacientes;
         this.tableModelPaciente = (DefaultTableModel) tablaPacientes.getModel();
@@ -87,6 +90,11 @@ public class ControllerPaciente {
     private void setUpTablePaciente() {
         tableModelPaciente = (DefaultTableModel) tablaPacientes.getModel();
     }
+
+    public void setTxtAreaAntecedente(JTextArea txtAreaAntecedente) {
+        this.txtAreaAntecedente = txtAreaAntecedente;
+    }
+    
     
     public void guardarPacienteDesdeFormulario() {
         try {
@@ -100,6 +108,7 @@ public class ControllerPaciente {
             String eps = cbEps.getSelectedItem().toString();
             String tipoDocumento = cbTipoDocumento.getSelectedItem().toString();
             String tipoSangre = cboTipoSangre.getSelectedItem().toString();
+            String antecedente=txtAreaAntecedente.getText().trim();
             
             if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
                 email.isEmpty() || telefono.isEmpty() || fechaStr.isEmpty()) {
@@ -138,7 +147,8 @@ public class ControllerPaciente {
                 email, 
                 telefono,
                 tipoDocumento,
-                tipoSangre
+                tipoSangre,
+                antecedente
             );
             
             pacienteDAO.guardarPaciente(nuevoPaciente);
@@ -163,12 +173,13 @@ public class ControllerPaciente {
         cboTipoSangre.setSelectedIndex(0);
         cbSexo.setSelectedIndex(0);
         cbEps.setSelectedIndex(0);
+        txtAreaAntecedente.setText("");
     }
     
     public void initTablePaciente() {
         tableModelPaciente = new DefaultTableModel(
             new Object[]{"Documento", "Nombres", "Apellidos", "Fecha Nacimiento", "Sexo", 
-                         "Eps", "Email", "Telefono", "Tipo Documento", "Tipo Sangre"}, 0) {
+                         "Eps", "Email", "Telefono", "Tipo Documento", "Tipo Sangre","Antecedentes"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -191,7 +202,8 @@ public class ControllerPaciente {
                 paciente.getEmail(),           
                 paciente.getCelular(),  
                 paciente.getTipoDocumento(),
-                paciente.getTipoSangre()  
+                paciente.getTipoSangre(),
+                paciente.getAntecendentes()
             };
             tableModelPaciente.addRow(row);
         }
@@ -256,6 +268,7 @@ public class ControllerPaciente {
             String eps = cbEps.getSelectedItem().toString();
             String tipoDocumento = cbTipoDocumento.getSelectedItem().toString();
             String tipoSangre = cboTipoSangre.getSelectedItem().toString();
+            String antecedentes=txtAreaAntecedente.getText().trim();
 
             if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
                 email.isEmpty() || telefono.isEmpty() || fechaStr.isEmpty()) {
@@ -289,7 +302,8 @@ public class ControllerPaciente {
                     email,
                     telefono,
                     tipoDocumento, 
-                    tipoSangre
+                    tipoSangre,
+                    antecedentes
             );
 
                boolean actualizado = pacienteDAO.actualizarPaciente(documentoOriginal, pacienteActualizado);
@@ -330,12 +344,9 @@ public class ControllerPaciente {
             txtCelularR.setText(tableModelPaciente.getValueAt(filaSeleccionada, 7).toString());
             cbTipoDocumento.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 8).toString());
             cboTipoSangre.setSelectedItem(tableModelPaciente.getValueAt(filaSeleccionada, 9).toString());
-            
+            txtAreaAntecedente.setText(tableModelPaciente.getValueAt(filaSeleccionada,10).toString());
             documentoOriginal = txtDocumentoR.getText();
         }
     }
-  
-    
-   
 }
 

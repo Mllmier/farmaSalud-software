@@ -14,6 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -56,7 +57,10 @@ public class ControllerCitas {
     private JComboBox<String> cboMotivoCita2;
     private JComboBox<String> cboConsultorio2;
     private JComboBox<String> cboMedicoCita2;
-  
+    private JLabel lblTotalCitas;
+    private JLabel lblCitasProgramadas;
+    private JLabel lblCitasCanceladas;
+    private JLabel lblCitasCompletadas;
     
 
    
@@ -121,7 +125,22 @@ public class ControllerCitas {
     } 
      public void setCboMedicoCita2(JComboBox<String> cboMedicoCita2) {
     this.cboMedicoCita2 = cboMedicoCita2;
-}
+    }
+       public void setLblTotalCitas(JLabel lblTotalCitas) {
+        this.lblTotalCitas = lblTotalCitas;
+    }
+    
+    public void setLblCitasProgramadas(JLabel lblCitasProgramadas) {
+        this.lblCitasProgramadas = lblCitasProgramadas;
+    }
+    
+    public void setLblCitasCanceladas(JLabel lblCitasCanceladas) {
+        this.lblCitasCanceladas = lblCitasCanceladas;
+    }
+    
+    public void setLblCitasCompletadas(JLabel lblCitasCompletadas) {
+        this.lblCitasCompletadas = lblCitasCompletadas;
+    }
     
 
     
@@ -180,6 +199,7 @@ public class ControllerCitas {
             );
               nuevaCita.setDocumentoPaciente(pacienteSeleccionado.getNumeroDocumento());
             citasDAO.guardarCita(nuevaCita);
+            actualizarEstadisticasCitas(); 
             JOptionPane.showMessageDialog(null, "Cita guardada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
           cargarCitasEnTabla();
           limpiarCita();
@@ -262,7 +282,7 @@ public void cargarPacienteEnTabla() {
     
     List<Cita> citas = citasDAO.cargarTodos();
     for (Cita cita : citas) {
-        // Buscar paciente por su documento (usando el campo documentoPaciente de Cita)
+        // Buscar paciente por su documento usando el campo documentoPaciente de Cita
         Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
         
         if (paciente != null) {
@@ -341,6 +361,7 @@ public void cargarPacienteEnTabla() {
         citaActualizada.setDocumentoPaciente(documentoPaciente);
 
         boolean actualizado = citasDAO.actualizarCita(idCitaOriginal, citaActualizada);
+        actualizarEstadisticasCitas(); 
        limpiarCita2() ;
         if (actualizado) {
             JOptionPane.showMessageDialog(null,
@@ -379,6 +400,79 @@ public void cargarPacienteEnTabla() {
         cboMotivoCita2.setSelectedIndex(0);
         cboConsultorio2.setSelectedIndex(0);
         cboTipoCita2.setSelectedIndex(0);
+    }
+  
+public void buscarCitaPorId(String idCita) {
+    try {
+        tableModelCita.setRowCount(0);
+
+        List<Cita> citas = citasDAO.cargarTodos();
+
+        for (Cita cita : citas) {
+            if (cita.getIdCita().toLowerCase().contains(idCita.toLowerCase())) {
+                Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+                
+                if (paciente != null) {
+                    // Añadir fila a la tabla
+                    Object[] row = {
+                        paciente.getNumeroDocumento(),
+                        paciente.getNombres(),
+                        paciente.getApellidos(),
+                        paciente.getEps(),
+                        paciente.getCelular(),
+                        cita.getIdCita(),
+                        cita.getHora(),
+                        cita.getMotivo(),
+                        cita.getFechaCita(),
+                        cita.getTipoCita(),
+                        cita.getConsultorio(),
+                        cita.getEstado().toString(),
+                        cita.getMedico()
+                    };
+                    tableModelCita.addRow(row);
+                }
+            }
+        }
+
+        if (tableModelCita.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, 
+                "No se encontraron citas con el ID: " + idCita, 
+                "Búsqueda sin resultados", 
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, 
+            "Error al buscar citas: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}         public void actualizarEstadisticasCitas() {
+          List<Cita> citas = citasDAO.cargarTodos();
+    
+          int totalCitas = citas.size();
+          int programadas = 0;
+          int canceladas = 0;
+          int completadas = 0;
+    
+          for (Cita cita : citas) {
+           switch (cita.getEstado()) {
+            case PROGRAMADA:
+                programadas++;
+                break;
+            case CANCELADA:
+                canceladas++;
+                break;
+            case COMPLETADA:
+                completadas++;
+                break;
+            }
+         }
+    
+             if (lblTotalCitas != null) lblTotalCitas.setText(String.valueOf(totalCitas));
+             if (lblCitasProgramadas != null) lblCitasProgramadas.setText(String.valueOf(programadas));
+             if (lblCitasCanceladas != null) lblCitasCanceladas.setText(String.valueOf(canceladas));
+             if (lblCitasCompletadas != null) lblCitasCompletadas.setText(String.valueOf(completadas));
     }
 }
      

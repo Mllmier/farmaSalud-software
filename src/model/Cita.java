@@ -43,8 +43,8 @@ public class Cita {
         this.especialidad=especialidad;
         this.motivo=motivo;
         this.consultorio=consultorio;
-        this.estado = EstadoCita.PROGRAMADA;
-    }
+        this.estado = estado;
+           }
     
 
     public String getIdCita() {
