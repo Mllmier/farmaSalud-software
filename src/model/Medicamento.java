@@ -1,23 +1,24 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Medicamento {
-    private int idMedicamento;
+    private String idMedicamento;
     private String nombre;
     private String descripcion;
     private String laboratorio;
-    private int cantidad;
-    private String lote;
-    private Date fechaVencimiento;
-    private boolean disponible;
-    private double precio;
+    private String cantidad;
+    private LocalDate lote;
+    private LocalDate fechaVencimiento;
+    private String disponible;
+    private String precio;
     public enum estadoMedicamento{
       PENDIENTE,
       ENTREGADO
      }
 
-    public Medicamento(int idMedicamento, String nombre, String descripcion, String laboratorio, int cantidad, String lote, Date fechaVencimiento, boolean disponible, double precio) {
+    public Medicamento(String idMedicamento, String nombre, String descripcion, String laboratorio, String cantidad, LocalDate lote,LocalDate fechaVencimiento,String disponible, String precio) {
         this.idMedicamento = idMedicamento;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -29,11 +30,11 @@ public class Medicamento {
         this.precio = precio;
     }
 
-    public int getIdMedicamento() {
+    public String getIdMedicamento() {
         return idMedicamento;
     }
 
-    public void setIdMedicamento(int idMedicamento) {
+    public void setIdMedicamento(String idMedicamento) {
         this.idMedicamento = idMedicamento;
     }
 
@@ -61,43 +62,43 @@ public class Medicamento {
         this.laboratorio = laboratorio;
     }
 
-    public int getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
-    public String getLote() {
+    public LocalDate getLote() {
         return lote;
     }
 
-    public void setLote(String lote) {
+    public void setLote(LocalDate lote) {
         this.lote = lote;
     }
 
-    public Date getFechaVencimiento() {
+    public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public boolean isDisponible() {
+    public String getDisponible() {
         return disponible;
     }
 
-    public void setDisponible(boolean disponible) {
+    public void setDisponible(String disponible) {
         this.disponible = disponible;
     }
 
-    public double getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 

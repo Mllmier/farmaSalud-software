@@ -8,6 +8,43 @@ package model;
  *
  * @author Maria liz
  */
-public class Farmaceutica {
+
+import java.time.LocalDate;
+
+public class Farmaceutica extends Persona {
+    private String codigoEmpleado;
+    private LocalDate fechaContratacion;
+    private String turno;
+
+    public Farmaceutica(String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular,String codigoEmpleado, LocalDate fechaContratacion, String turno ) {
+        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular);
+        this.codigoEmpleado = codigoEmpleado;
+        this.fechaContratacion = fechaContratacion;
+        this.turno = turno;
+    }
+
+    public String getCodigoEmpleado() {
+        return codigoEmpleado;
+    }
+
+    public void setCodigoEmpleado(String codigoEmpleado) {
+        this.codigoEmpleado = codigoEmpleado;
+    }
+
+    public LocalDate getFechaContratacion() {
+        return fechaContratacion;
+    }
+
+    public void setFechaContratacion(LocalDate fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
+    }
+
     
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
 }
