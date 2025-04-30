@@ -4,18 +4,19 @@
  */
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  *
  * @author Maria liz
  */
-public class OrdenMedica {
-    private  String dosis;
-    private String indicaciones;
-    private Medico medico;
-    private String fecha;
-    private Paciente paciente;
-    private List<Medicamento> medicamentos;
+public class OrdenMedica extends Paciente {
+  
+    public OrdenMedica(String numeroDocumento, String nombres, String apellidos, LocalDate fechaNacimiento, String sexo, String eps, String email, String celular, String tipoDocumento, String tipoSangre, String Antecendentes) {
+        super(numeroDocumento, nombres, apellidos, fechaNacimiento, sexo, eps, email, celular, tipoDocumento, tipoSangre, Antecendentes);
+    }
+  
+    
   
 }
