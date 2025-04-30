@@ -24,7 +24,7 @@ import model.Medicamento;
 
 
 public class MedicamentosDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Documents\\NetBeansProjects\\farmaSalud-software\\src\\resources\\data\\medicamentos.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\medicamentos.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class,new LocalDateAdapter())
     .create();
     
@@ -169,4 +169,23 @@ public class MedicamentosDAO {
     }
 }
     }
+    public List<Medicamento> buscarMedicamentos(String criterio) throws IOException {
+    List<Medicamento> medicamentos = cargarTodos();
+    List<Medicamento> resultados = new ArrayList<>();
+    
+    if (criterio == null || criterio.trim().isEmpty()) {
+        return medicamentos; // Si no hay criterio, devolver todos
+    }
+    
+    String criterioLower = criterio.toLowerCase();
+    
+    for (Medicamento med : medicamentos) {
+        if (med.getIdMedicamento().toLowerCase().contains(criterioLower) || 
+            med.getNombre().toLowerCase().contains(criterioLower)) {
+            resultados.add(med);
+        }
+    }
+    
+    return resultados;
+}
 }

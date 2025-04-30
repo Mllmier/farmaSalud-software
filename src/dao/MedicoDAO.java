@@ -48,6 +48,9 @@ public class MedicoDAO {
             System.err.println("Error al guardar médicos: " + e.getMessage());
         }
     }
+    public List<Medico> obtenerTodosMedicos() {
+    return cargarTodos(); 
+}
     
    public boolean eliminarMedico(String numeroDocumento) {
     try {

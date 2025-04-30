@@ -7,7 +7,7 @@
     "cantidad": "2000",
     "lote": "2025-04-04",
     "fechaVencimiento": "2027-04-04",
-    "disponible": "Si",
+    "disponible": "NO DISPONIBLE",
     "precio": "600000"
   },
   {
@@ -18,7 +18,7 @@
     "cantidad": "2000",
     "lote": "2025-03-04",
     "fechaVencimiento": "2027-03-04",
-    "disponible": "Si",
+    "disponible": "NO DISPONIBLE",
     "precio": "1400000"
   },
   {
@@ -29,7 +29,7 @@
     "cantidad": "2000",
     "lote": "2025-03-04",
     "fechaVencimiento": "2027-03-04",
-    "disponible": "Si",
+    "disponible": "NO DISPONIBLE",
     "precio": "4000000"
   }
 ]

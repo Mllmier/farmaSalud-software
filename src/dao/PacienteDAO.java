@@ -10,12 +10,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Cita;
 import model.Paciente;
 
 
@@ -23,7 +23,8 @@ import model.Paciente;
 public class PacienteDAO {
     private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Documents\\NetBeansProjects\\farmaSalud-software\\src\\resources\\data\\pacientes.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    
+            private List<Paciente> pacien = new ArrayList<>();
+
       public PacienteDAO() {
         // Configurar Gson con el adaptador para LocalDate
         this.gson = new GsonBuilder()
@@ -35,9 +36,19 @@ public class PacienteDAO {
         try (Reader reader = new FileReader(ARCHIVO_JSON)) {
             return gson.fromJson(reader, new TypeToken<List<Paciente>>() {}.getType());
         } catch (IOException e) {
-            return new ArrayList<>(); // Si el archivo no existe, retorna lista vacía
+            return new ArrayList<>(); 
         }
     }
+     public Paciente buscarPacientePorIdentificacion(String documento) {
+    List<Paciente> pacientes = cargarTodos();
+    for (Paciente paciente : pacientes) {
+        if (paciente.getNumeroDocumento().equals(documento)) {
+            return paciente; // Asegúrate que esto retorna Paciente, no Persona
+        }
+    }
+    return null;
+}
+     
     
     public void guardarPaciente(Paciente paciente) {
         List<Paciente> pacientes = cargarTodos();
@@ -76,6 +87,14 @@ public class PacienteDAO {
         return false;
     }     
 }
+      // En PacienteDAO.java
+     public Paciente buscarPorDocumento(String documento) {
+      List<Paciente> pacientes = cargarTodos();
+     return pacientes.stream()
+        .filter(p -> p.getNumeroDocumento().equals(documento))
+        .findFirst()
+        .orElse(null);
+    }
        public boolean actualizarPaciente(String documentoOriginal, Paciente pacienteActualizado) {
     try {
         List<Paciente> pacientes = cargarTodos();
