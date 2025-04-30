@@ -21,7 +21,7 @@ import model.Paciente;
 
 
 public class PacienteDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Pictures\\farmaSalud\\src\\resources\\data\\pacientes.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\HP\\Documents\\NetBeansProjects\\farmaSalud-software\\src\\resources\\data\\pacientes.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
       public PacienteDAO() {
