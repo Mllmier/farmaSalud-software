@@ -116,74 +116,111 @@ public class ControllerRecepcionista {
         }
     }
     
-    public void guardarRecepcionistaDesdeFormulario() {
+   public void guardarRecepcionistaDesdeFormulario() {
+    try {
+        
+        String nombres = txtNombre.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String documento = txtDocumento.getText().trim();
+        String email = txtEmail.getText().trim();
+        String fechaNacStr = txtFechaNacimiento.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String codigoEmpleado = txtCodigoEmpleado.getText().trim();
+        String fechaContratacionStr = txtFechaContratacion.getText().trim();
+        String sexo = cbSexo.getSelectedItem() != null ? cbSexo.getSelectedItem().toString() : "";
+        String eps = cbEps.getSelectedItem() != null ? cbEps.getSelectedItem().toString() : "";
+        String turno = cbTurno.getSelectedItem() != null ? cbTurno.getSelectedItem().toString() : "";
+
+        
+        if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
+            email.isEmpty() || telefono.isEmpty() || fechaNacStr.isEmpty() ||
+            codigoEmpleado.isEmpty() || fechaContratacionStr.isEmpty() ||
+            sexo.isEmpty() || eps.isEmpty() || turno.isEmpty()) {
+            JOptionPane.showMessageDialog(null, 
+                "Todos los campos son obligatorios", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        LocalDate fechaNacimiento;
+        LocalDate fechaContratacion;
         try {
-            String nombres = txtNombre.getText().trim();
-            String apellidos = txtApellidos.getText().trim();
-            String documento = txtDocumento.getText().trim();
-            String email = txtEmail.getText().trim();
-            String fechaNacStr = txtFechaNacimiento.getText().trim();
-            String telefono = txtTelefono.getText().trim();
-            String codigoEmpleado = txtCodigoEmpleado.getText().trim();
-            String fechaContratacionStr = txtFechaContratacion.getText().trim();
-            String sexo = cbSexo.getSelectedItem().toString();
-            String eps = cbEps.getSelectedItem().toString();
-            String turno = cbTurno.getSelectedItem().toString();
+            fechaNacimiento = LocalDate.parse(fechaNacStr);
+            fechaContratacion = LocalDate.parse(fechaContratacionStr);
             
-            if (nombres.isEmpty() || apellidos.isEmpty() || documento.isEmpty() || 
-                email.isEmpty() || telefono.isEmpty() || fechaNacStr.isEmpty() ||
-                codigoEmpleado.isEmpty() || fechaContratacionStr.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
             
-            LocalDate fechaNacimiento;
-            LocalDate fechaContratacion;
-            try {
-                fechaNacimiento = LocalDate.parse(fechaNacStr);
-                fechaContratacion = LocalDate.parse(fechaContratacionStr);
-            } catch (DateTimeParseException e) {
+            if (fechaContratacion.isBefore(fechaNacimiento)) {
                 JOptionPane.showMessageDialog(null,
-                    "Formato de fecha inválido. Usa YYYY-MM-DD",
+                    "La fecha de contratación no puede ser anterior a la fecha de nacimiento",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null,
+                "Formato de fecha inválido. Usa YYYY-MM-DD",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        boolean existe = recepcionistaDAO.cargarTodos().stream()
+            .filter(r -> r.getNumeroDocumento() != null) 
+            .anyMatch(r -> r.getNumeroDocumento().equals(documento));
             
-            boolean existe = recepcionistaDAO.cargarTodos().stream()
-                .anyMatch(r -> r.getNumeroDocumento().equals(documento));
-            if (existe) {
-                JOptionPane.showMessageDialog(null,
-                    "Ya existe un recepcionista con este documento",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        if (existe) {
+            JOptionPane.showMessageDialog(null,
+                "Ya existe un recepcionista con este documento",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            JOptionPane.showMessageDialog(null,
+                "El formato del email no es válido",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        Recepcionista nuevoRecepcionista = new Recepcionista(
+            documento,
+            nombres,
+            apellidos,
+            fechaNacimiento,
+            sexo,
+            eps,
+            email,
+            telefono,
+            codigoEmpleado,
+            fechaContratacion,
+            turno
+        );
+
+        recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista);
+        JOptionPane.showMessageDialog(null, 
+            "Recepcionista guardado exitosamente", 
+            "Éxito", 
+            JOptionPane.INFORMATION_MESSAGE);
             
-            Recepcionista nuevoRecepcionista = new Recepcionista(
-                documento,
-                nombres,
-                apellidos,
-                fechaNacimiento,
-                sexo,
-                eps,
-                email,
-                telefono,
-                codigoEmpleado,
-                fechaContratacion,
-                turno
-            );
-            
-            recepcionistaDAO.guardarRecepcionista(nuevoRecepcionista);
-            JOptionPane.showMessageDialog(null, "Recepcionista guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            cargarDatosEnTablaRecepcionista();
-            limpiarRecepcionista();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar Recepcionista: " + e.getMessage(),
-                "ERROR", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }    
-    }
+        
+        cargarDatosEnTablaRecepcionista();
+        limpiarRecepcionista();
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, 
+            "Error al guardar Recepcionista: " + e.getMessage(),
+            "ERROR", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }    
+}
     
     public void limpiarRecepcionista() {
         txtNombre.setText("");

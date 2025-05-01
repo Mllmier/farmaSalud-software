@@ -72,27 +72,29 @@ public class ControllerSalas {
         }
     }
     
-    public void guardarSalaDesdeFormulario() {
-        try {
-            String nombreSala = txtNombreSala.getText().trim();
-            String codigoSala = txtCodigoSala.getText().trim();
-            String tipoSala = cbTipoSala.getSelectedItem().toString();
-            int capacidad = (int) spCapacidad.getValue();
-            
-            if (nombreSala.isEmpty() || codigoSala.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Nombre y código son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            boolean existe = salasDAO.cargarTodasSalas().stream()
-                .anyMatch(s -> s.getCodigoSala().equals(codigoSala));
-            if (existe) {
-                JOptionPane.showMessageDialog(null,
-                    "Ya existe una sala con este código",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+   public void guardarSalaDesdeFormulario() {
+    try {
+        String nombreSala = txtNombreSala.getText().trim();
+        String codigoSala = txtCodigoSala.getText().trim();
+        String tipoSala = cbTipoSala.getSelectedItem().toString();
+        int capacidad = (int) spCapacidad.getValue();
+        
+        if (nombreSala.isEmpty() || codigoSala.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nombre y código son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Solución: Verificar nulos en la comparación
+        boolean existe = salasDAO.cargarTodasSalas().stream()
+            .anyMatch(s -> codigoSala.equals(s.getCodigoSala())); // Cambio importante aquí
+        
+        if (existe) {
+            JOptionPane.showMessageDialog(null,
+                "Ya existe una sala con este código",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
             
             Salas nuevaSala = new Salas(
                 nombreSala,

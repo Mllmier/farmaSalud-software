@@ -3252,6 +3252,7 @@
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_BuscarMedicamentoActionPerformed"/>
                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButton_BuscarMedicamentoKeyPressed"/>
                   </Events>
                   <Constraints>
@@ -3957,6 +3958,7 @@
                     <Property name="text" type="java.lang.String" value="Mostrar todos"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_MostrarTodosMedicamentosActionPerformed"/>
                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButton_MostrarTodosMedicamentosKeyPressed"/>
                   </Events>
                   <Constraints>

@@ -48,7 +48,6 @@ public class admin extends javax.swing.JFrame {
         
         configurarListeners();
         
-        txtCodigoSala.setEditable(false);
         
         
         
@@ -1568,6 +1567,11 @@ public class admin extends javax.swing.JFrame {
         jPanel31.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 67, 610, 500));
 
         jButton_BuscarMedicamento.setText("Buscar");
+        jButton_BuscarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_BuscarMedicamentoActionPerformed(evt);
+            }
+        });
         jButton_BuscarMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jButton_BuscarMedicamentoKeyPressed(evt);
@@ -1827,6 +1831,11 @@ public class admin extends javax.swing.JFrame {
         jPanel31.add(jPanel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 390, 590));
 
         jButton_MostrarTodosMedicamentos.setText("Mostrar todos");
+        jButton_MostrarTodosMedicamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_MostrarTodosMedicamentosActionPerformed(evt);
+            }
+        });
         jButton_MostrarTodosMedicamentos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jButton_MostrarTodosMedicamentosKeyPressed(evt);
@@ -2260,8 +2269,7 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_JtexfieldPrecio_MedicamentoKeyTyped
 
     private void jButton_BuscarMedicamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton_BuscarMedicamentoKeyPressed
-         String criterio = Jtextfield_BuscadorMedicamento.getText().trim();
-    controllerMedicamento.buscarMedicamentos(criterio);
+         
     }//GEN-LAST:event_jButton_BuscarMedicamentoKeyPressed
 
     private void Jtextfield_BuscadorMedicamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Jtextfield_BuscadorMedicamentoKeyPressed
@@ -2272,9 +2280,18 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_Jtextfield_BuscadorMedicamentoKeyPressed
 
     private void jButton_MostrarTodosMedicamentosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton_MostrarTodosMedicamentosKeyPressed
-        controllerMedicamento.mostrarTodosMedicamentos();
-    Jtextfield_BuscadorMedicamento.setText("");
+        
     }//GEN-LAST:event_jButton_MostrarTodosMedicamentosKeyPressed
+
+    private void jButton_MostrarTodosMedicamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_MostrarTodosMedicamentosActionPerformed
+        controllerMedicamento.mostrarTodosMedicamentos();
+        Jtextfield_BuscadorMedicamento.setText("");
+    }//GEN-LAST:event_jButton_MostrarTodosMedicamentosActionPerformed
+
+    private void jButton_BuscarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BuscarMedicamentoActionPerformed
+        String criterio = Jtextfield_BuscadorMedicamento.getText().trim();
+        controllerMedicamento.buscarMedicamentos(criterio);
+    }//GEN-LAST:event_jButton_BuscarMedicamentoActionPerformed
 
 
     /**
