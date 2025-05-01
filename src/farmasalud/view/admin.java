@@ -1568,6 +1568,11 @@ public class admin extends javax.swing.JFrame {
         jPanel31.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 67, 610, 500));
 
         jButton_BuscarMedicamento.setText("Buscar");
+        jButton_BuscarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_BuscarMedicamentoActionPerformed(evt);
+            }
+        });
         jButton_BuscarMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jButton_BuscarMedicamentoKeyPressed(evt);
@@ -1576,6 +1581,11 @@ public class admin extends javax.swing.JFrame {
         jPanel31.add(jButton_BuscarMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, 130, 30));
 
         Jtextfield_BuscadorMedicamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 255)));
+        Jtextfield_BuscadorMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jtextfield_BuscadorMedicamentoActionPerformed(evt);
+            }
+        });
         Jtextfield_BuscadorMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 Jtextfield_BuscadorMedicamentoKeyPressed(evt);
@@ -2275,6 +2285,14 @@ public class admin extends javax.swing.JFrame {
         controllerMedicamento.mostrarTodosMedicamentos();
     Jtextfield_BuscadorMedicamento.setText("");
     }//GEN-LAST:event_jButton_MostrarTodosMedicamentosKeyPressed
+
+    private void Jtextfield_BuscadorMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jtextfield_BuscadorMedicamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Jtextfield_BuscadorMedicamentoActionPerformed
+
+    private void jButton_BuscarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BuscarMedicamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_BuscarMedicamentoActionPerformed
 
 
     /**
