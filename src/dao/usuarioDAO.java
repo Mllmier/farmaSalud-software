@@ -4,33 +4,36 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.FileReader;
-import model.Recepcionista;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import model.*;
 
-import model.Rol;
-import model.Usuario;
-
-/**
- *
- * @author Maria liz
- */
 public class usuarioDAO {
+    private static final String MEDICOS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\empleados.json";
+    private static final String RECEPCIONISTAS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\recepcionista.json";
+    private static final String ADMINISTRADORES_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\usuarios.json";
+    private static final String FARMACEUTICOS_JSON = "C:\\Users\\usuario\\OneDrive\\Escritorio\\farmaSalud-software\\src\\resources\\data\\farmaceutica.json";
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private static final String JSON_FILE = "C:\\Users\\usuario\\Downloads\\farmaSalud\\src\\resources\\data\\usuarios.json";
-
-    public Usuario validarCredenciales(String email, String password) {
-        try (FileReader reader = new FileReader(JSON_FILE)) {
-            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-            JsonArray usuariosJson = jsonObject.getAsJsonArray("usuarios");
-
-            for (int i = 0; i < usuariosJson.size(); i++) {
-                JsonObject usuarioJson = usuariosJson.get(i).getAsJsonObject();
-
-                String userEmail = usuarioJson.get("email").getAsString();
-                String userPassword = usuarioJson.get("password").getAsString();
-
-                if (userEmail.equals(email) && userPassword.equals(password)) {
-                    Rol rol = Rol.valueOf(usuarioJson.get("rol").getAsString());
-                    return new Usuario(userEmail, userPassword, rol, null);
+    // Métodos públicos para buscar usuarios
+    public Administrador buscarAdministrador(String email, String documento) {
+        try (FileReader reader = new FileReader(ADMINISTRADORES_JSON)) {
+            JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
+            for (int i = 0; i < array.size(); i++) {
+                JsonObject json = array.get(i).getAsJsonObject();
+                if (json.get("email").getAsString().equalsIgnoreCase(email) &&
+                    json.get("numeroDocumento").getAsString().equals(documento)) {
+                    return new Administrador(
+                        documento,
+                        json.get("nombres").getAsString(),
+                        json.get("apellidos").getAsString(),
+                        json.get("codigoEmpleado").getAsString(),
+                        LocalDate.parse(json.get("fechaNacimiento").getAsString(), DATE_FORMATTER),
+                        json.get("sexo").getAsString(),
+                        json.get("eps").getAsString(),
+                        email,
+                        json.get("celular").getAsString()
+                    );
                 }
             }
         } catch (Exception e) {
@@ -39,13 +42,102 @@ public class usuarioDAO {
         return null;
     }
 
-    public boolean esAdministrador(Usuario usuario) {
-        return usuario != null && usuario.getRole() == Rol.ADMINISTRADOR;
+    public Medico buscarMedico(String email, String documento) {
+        try (FileReader reader = new FileReader(MEDICOS_JSON)) {
+            JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
+            for (int i = 0; i < array.size(); i++) {
+                JsonObject json = array.get(i).getAsJsonObject();
+                if (json.get("email").getAsString().equalsIgnoreCase(email) &&
+                    json.get("numeroDocumento").getAsString().equals(documento)) {
+                    return new Medico(
+                        json.get("nombres").getAsString(),
+                        json.get("apellidos").getAsString(),
+                        email,
+                        documento,
+                        json.get("celular").getAsString(),
+                        json.get("especialidad").getAsString(),
+                        LocalDate.parse(json.get("fechaNacimiento").getAsString(), DATE_FORMATTER),
+                        json.get("sexo").getAsString(),
+                        json.get("eps").getAsString()
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    public boolean esRecepcionista(Usuario recepcionista){
-        return recepcionista !=null && recepcionista.getRole()==Rol.RECEPCIONISTA;
+
+    public Recepcionista buscarRecepcionista(String email, String documento) {
+        try (FileReader reader = new FileReader(RECEPCIONISTAS_JSON)) {
+            JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
+            for (int i = 0; i < array.size(); i++) {
+                JsonObject json = array.get(i).getAsJsonObject();
+                if (json.get("email").getAsString().equalsIgnoreCase(email) &&
+                    json.get("numeroDocumento").getAsString().equals(documento)) {
+                    return new Recepcionista(
+                        documento,
+                        json.get("nombres").getAsString(),
+                        json.get("apellidos").getAsString(),
+                        LocalDate.parse(json.get("fechaNacimiento").getAsString(), DATE_FORMATTER),
+                        json.get("sexo").getAsString(),
+                        json.get("eps").getAsString(),
+                        email,
+                        json.get("celular").getAsString(),
+                        json.get("codigoEmpleado").getAsString(),
+                        LocalDate.parse(json.get("fechaContratacion").getAsString(), DATE_FORMATTER),
+                        json.get("turno").getAsString()
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    public boolean esDoctor(Usuario doctor){
-        return doctor !=null && doctor.getRole()==Rol.MEDICO;
+
+    public Farmaceutica buscarFarmaceutico(String email, String documento) {
+        try (FileReader reader = new FileReader(FARMACEUTICOS_JSON)) {
+            JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
+            for (int i = 0; i < array.size(); i++) {
+                JsonObject json = array.get(i).getAsJsonObject();
+                if (json.get("email").getAsString().equalsIgnoreCase(email) &&
+                    json.get("numeroDocumento").getAsString().equals(documento)) {
+                    return new Farmaceutica(
+                        documento,
+                        json.get("nombres").getAsString(),
+                        json.get("apellidos").getAsString(),
+                        LocalDate.parse(json.get("fechaNacimiento").getAsString(), DATE_FORMATTER),
+                        json.get("sexo").getAsString(),
+                        json.get("eps").getAsString(),
+                        email,
+                        json.get("celular").getAsString(),
+                        json.get("codigoEmpleado").getAsString(),
+                        LocalDate.parse(json.get("fechaContratacion").getAsString(), DATE_FORMATTER),
+                        json.get("turno").getAsString()
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Métodos para verificar roles
+    public boolean esAdministrador(Object usuario) {
+        return usuario instanceof Administrador;
+    }
+    
+    public boolean esMedico(Object usuario) {
+        return usuario instanceof Medico;
+    }
+    
+    public boolean esRecepcionista(Object usuario) {
+        return usuario instanceof Recepcionista;
+    }
+    
+    public boolean esFarmaceutico(Object usuario) {
+        return usuario instanceof Farmaceutica;
     }
 }

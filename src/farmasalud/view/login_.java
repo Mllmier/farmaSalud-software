@@ -31,9 +31,6 @@ public class login_ extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Jtextfield_usuario = new javax.swing.JTextField();
@@ -45,8 +42,6 @@ public class login_ extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,15 +49,6 @@ public class login_ extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons8-privado-2-32.png"))); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 272, -1, 50));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons8-eye-24.png"))); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 37, 30));
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons8-usuario-masculino-en-círculo-32.png"))); // NOI18N
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 30)); // NOI18N
         jLabel1.setText("INICIAR SESION");
@@ -78,7 +64,7 @@ public class login_ extends javax.swing.JFrame {
                 Jtextfield_usuarioActionPerformed(evt);
             }
         });
-        jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 178, 300, 29));
+        jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 300, 29));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutica" }));
@@ -130,14 +116,6 @@ public class login_ extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(10, 92, 184));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/doc-removebg-preview.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 248, 348, -1));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Logo Medicina Salud Minimalista Corporativo Azul  (3).jpg"))); // NOI18N
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 6, 212, -1));
-
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 360, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,21 +141,42 @@ public class login_ extends javax.swing.JFrame {
     }//GEN-LAST:event_Jtextfield_contraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String email = Jtextfield_usuario.getText().trim();
-        String password = new String(Jtextfield_contraseña.getPassword());
+    String email = Jtextfield_usuario.getText().trim();
+    String documento = new String(Jtextfield_contraseña.getPassword());
+    
+    if (email.isEmpty() || documento.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+                "Email y número de documento son requeridos",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Email y contraseña son requeridos",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
+    String rolSeleccionado = (String) jComboBox1.getSelectedItem();
+    usuarioDAO usuarioDAO = new usuarioDAO();
+    Object usuario = null;
+    
+    try {
+        switch(rolSeleccionado) {
+            case "Administrador":
+                usuario = usuarioDAO.buscarAdministrador(email, documento);
+                break;
+            case "Doctor":
+                usuario = usuarioDAO.buscarMedico(email, documento);
+                break;
+            case "Recepcionista":
+                usuario = usuarioDAO.buscarRecepcionista(email, documento);
+                break;
+            case "Farmaceutica":
+                usuario = usuarioDAO.buscarFarmaceutico(email, documento);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this,
+                        "Seleccione un rol válido",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
         }
-
-        //instancia para acceder al metodo validar
-        usuarioDAO usuarioDAO = new usuarioDAO();
-        //accedemos al metodo
-        Usuario usuario = usuarioDAO.validarCredenciales(email, password);
 
         if (usuario != null) {
             if (usuarioDAO.esAdministrador(usuario)) {
@@ -194,25 +193,40 @@ public class login_ extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
                 new recepcionista().setVisible(true);
                 this.dispose();
-            } else if (usuarioDAO.esDoctor(usuario)) {
+            } else if (usuarioDAO.esMedico(usuario)) {
                 JOptionPane.showMessageDialog(this,
                         "Bienvenido Doctor",
                         "Login Exitoso",
                         JOptionPane.INFORMATION_MESSAGE);
                 new Doctor().setVisible(true);
                 this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "Inicio de sesión exitoso (no es medico )",
-                        "Login Exitoso",
-                        JOptionPane.INFORMATION_MESSAGE);
+            } else if (usuarioDAO.esFarmaceutico(usuario)) {
+                try {
+                    new Farmaceutica().setVisible(true);
+                    this.dispose();
+                    JOptionPane.showMessageDialog(this,
+                            "Bienvenido/a Farmacéutico/a",
+                            "Login Exitoso",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Error al abrir la interfaz de Farmacéutico: " + e.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this,
-                    "Email o contraseña incorrectos",
+                    "Credenciales incorrectas o usuario no existe",
                     "Error de Login",
                     JOptionPane.ERROR_MESSAGE);
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+                "Error durante el login: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -262,11 +276,6 @@ public class login_ extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
