@@ -1,3 +1,57 @@
-{
-    
-}
+[
+  {
+    "IdCita": "j0980TextField2",
+    "fechaCita": "2000-09-09",
+    "hora": "08:30",
+    "tipoCita": "\u003cTipo de cita\u003e",
+    "consultorio": "Consultorio 4",
+    "motivo": "Seguimiento",
+    "estado": "CANCELADA",
+    "documentoPaciente": "20000",
+    "especialidad": "General"
+  },
+  {
+    "IdCita": "984",
+    "fechaCita": "2000-09-09",
+    "hora": "08:00",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 2",
+    "motivo": "Enfermedad Cronica",
+    "estado": "CANCELADA",
+    "documentoPaciente": "20000",
+    "especialidad": "Oftamologia"
+  },
+  {
+    "IdCita": "2345",
+    "fechaCita": "2000-09-08",
+    "hora": "08:00",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 2",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "0997367373",
+    "especialidad": "General"
+  },
+  {
+    "IdCita": "07",
+    "fechaCita": "2000-09-09",
+    "hora": "07:30",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 4",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "0987654321",
+    "especialidad": "General"
+  },
+  {
+    "IdCita": "5678",
+    "fechaCita": "2000-09-09",
+    "hora": "08:30",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 2",
+    "motivo": "Seguimiento",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "0997367373",
+    "especialidad": "Oftamologia"
+  }
+]

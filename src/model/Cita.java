@@ -1,32 +1,60 @@
 package model;
 
-import farmasalud.view.Paciente;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Cita {
+    private  String IdCita;
     private LocalDate fechaCita;
-    private LocalTime hora;
+    private String hora;
     private String tipoCita;
     private String consultorio;
     private String motivo;
     private EstadoCita estado;
-    private Paciente paciente;
-    //private Doctor doctor;
+    private String documentoPaciente;
+    
+    private String  especialidad;
 
     public enum EstadoCita {
         PROGRAMADA,
         COMPLETADA,
-        CANCELADA
+        CANCELADA;
+        
+        public static EstadoCita getPROGRAMADA() {
+            return PROGRAMADA;
+        }
+
+        public static EstadoCita getCOMPLETADA() {
+            return COMPLETADA;
+        }
+
+        public static EstadoCita getCANCELADA() {
+            return CANCELADA;
+        }
     }
 
-    public Cita(LocalDate fechaCita, LocalTime hora, Paciente paciente /*Doctor doctor*/) {
+    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio,EstadoCita estado,String  especialidad ) {
+        
+        this.IdCita=IdCita;
+        this.motivo=motivo;
         this.fechaCita = fechaCita;
         this.hora = hora;
-        this.paciente = paciente;
-        //this.doctor = doctor;
-        this.estado = EstadoCita.PROGRAMADA;
+        this.tipoCita=tipoCita;
+        this.especialidad=especialidad;
+        this.motivo=motivo;
+        this.consultorio=consultorio;
+        this.estado = estado;
+           }
+    
+
+    public String getIdCita() {
+        return IdCita;
     }
+
+    public void setIdCita(String idCita) {
+        this.IdCita = idCita;
+    }
+    
 
     public LocalDate getFechaCita() {
         return fechaCita;
@@ -36,11 +64,11 @@ public class Cita {
         this.fechaCita = fechaCita;
     }
 
-    public LocalTime getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
@@ -75,14 +103,19 @@ public class Cita {
     public void setEstado(EstadoCita estado) {
         this.estado = estado;
     }
-
-    public Paciente getPaciente() {
-        return paciente;
+    public String getMedico() {
+        return especialidad;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setMedico(String  especialidad) {
+        this.especialidad = especialidad;
+    } 
+
+    public String getDocumentoPaciente() {
+        return documentoPaciente;
     }
 
-    
+    public void setDocumentoPaciente(String documentoPaciente) {
+        this.documentoPaciente = documentoPaciente;
+    }
 }
