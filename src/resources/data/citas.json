@@ -1,57 +1,99 @@
 [
   {
-    "IdCita": "j0980TextField2",
-    "fechaCita": "2000-09-09",
-    "hora": "08:30",
-    "tipoCita": "\u003cTipo de cita\u003e",
-    "consultorio": "Consultorio 4",
-    "motivo": "Seguimiento",
-    "estado": "CANCELADA",
-    "documentoPaciente": "20000",
-    "especialidad": "General"
-  },
-  {
-    "IdCita": "984",
-    "fechaCita": "2000-09-09",
+    "IdCita": "23",
+    "fechaCita": "2003-09-09",
     "hora": "08:00",
-    "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
-    "motivo": "Enfermedad Cronica",
-    "estado": "CANCELADA",
-    "documentoPaciente": "20000",
-    "especialidad": "Oftamologia"
-  },
-  {
-    "IdCita": "2345",
-    "fechaCita": "2000-09-08",
-    "hora": "08:00",
-    "tipoCita": "Regular",
+    "tipoCita": "Control",
     "consultorio": "Consultorio 2",
     "motivo": "Prevencion",
-    "estado": "CANCELADA",
-    "documentoPaciente": "0997367373",
-    "especialidad": "General"
+    "estado": "COMPLETADA",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12345889900",
+      "nombres": "juan",
+      "apellidos": "perez",
+      "fechaNacimiento": "2003-09-09",
+      "sexo": "F",
+      "eps": "Item 3",
+      "email": "juan@gmail.com",
+      "celular": "1234567890"
+    }
   },
   {
-    "IdCita": "07",
-    "fechaCita": "2000-09-09",
+    "IdCita": "21",
+    "fechaCita": "2024-09-09",
     "hora": "07:30",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 4",
+    "consultorio": "Consultorio 3",
+    "motivo": "Sintomas Agudos",
+    "estado": "CANCELADA",
+    "documentoPaciente": "098642468",
+    "documentoMedico": "nicoller"
+  },
+  {
+    "IdCita": "56",
+    "fechaCita": "2020-07-10",
+    "hora": "08:00",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 3",
+    "motivo": "Prevencion",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "0997367373",
+    "documentoMedico": "juan"
+  },
+  {
+    "IdCita": "45",
+    "fechaCita": "2000-09-09",
+    "hora": "07:00",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 3",
     "motivo": "Prevencion",
     "estado": "CANCELADA",
     "documentoPaciente": "0987654321",
-    "especialidad": "General"
+    "documentoMedico": "juan"
   },
   {
-    "IdCita": "5678",
-    "fechaCita": "2000-09-09",
-    "hora": "08:30",
+    "IdCita": "76",
+    "fechaCita": "2023-09-09",
+    "hora": "08:00",
     "tipoCita": "Regular",
-    "consultorio": "Consultorio 2",
+    "consultorio": "Consultorio 3",
+    "motivo": "Prevencion",
+    "estado": "CANCELADA",
+    "documentoPaciente": "0997367373",
+    "documentoMedico": "1234567890"
+  },
+  {
+    "IdCita": "70",
+    "fechaCita": "2000-09-09",
+    "hora": "07:30",
+    "tipoCita": "Prioritaria",
+    "consultorio": "Consultorio 3",
     "motivo": "Seguimiento",
     "estado": "COMPLETADA",
-    "documentoPaciente": "0997367373",
-    "especialidad": "Oftamologia"
+    "documentoPaciente": "0876578484",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "12345889900",
+      "nombres": "juan",
+      "apellidos": "perez",
+      "fechaNacimiento": "2003-09-09",
+      "sexo": "F",
+      "eps": "Item 3",
+      "email": "juan@gmail.com",
+      "celular": "1234567890"
+    },
+    "documentoMedico": "juan"
+  },
+  {
+    "IdCita": "09",
+    "fechaCita": "2023-09-09",
+    "hora": "08:30",
+    "tipoCita": "Control",
+    "consultorio": "Consultorio 4",
+    "motivo": "Prevencion",
+    "estado": "PROGRAMADA",
+    "documentoPaciente": "0987654321",
+    "documentoMedico": "12345889900"
   }
 ]

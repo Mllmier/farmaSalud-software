@@ -15,9 +15,10 @@ import java.util.List;
 import com.google.gson.stream.JsonWriter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import model.Paciente;
 
 public class MedicoDAO {
-    private static final String ARCHIVO_JSON = "C:\\Users\\usuario\\Downloads\\farmaSalud\\src\\resources\\data\\empleados.json";
+    private static final String ARCHIVO_JSON = "C:\\Users\\Maria liz\\Pictures\\farmaSalud\\src\\resources\\data\\empleados.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .create();
 
@@ -48,6 +49,7 @@ public class MedicoDAO {
             System.err.println("Error al guardar médicos: " + e.getMessage());
         }
     }
+   
     public List<Medico> obtenerTodosMedicos() {
     return cargarTodos(); 
 }
@@ -78,7 +80,24 @@ public class MedicoDAO {
     }
         
         
+} 
+   public Medico buscarMedicoPorIdentificacion(String documento) {
+    List<Medico> medicos = cargarTodos();
+    for (Medico medico : medicos) {
+        if (medico.getNumeroDocumento().equals(documento)) {
+            return medico; 
+        }
+    }
+    return null;
 }
+ public Medico buscarPorDocumentoMedico(String documento) {
+      List<Medico> medicos = cargarTodos();
+     return medicos.stream()
+        .filter(p -> p.getNumeroDocumento().equals(documento))
+        .findFirst()
+        .orElse(null);
+    }
+
    
    public boolean actualizarMedico(String cedulaOriginal, Medico medicoActualizado) {
     try {
@@ -99,7 +118,7 @@ public class MedicoDAO {
         return false;
     }
 }
-
+  
 public class LocalDateAdapter extends TypeAdapter<LocalDate>{
         private final DateTimeFormatter formatter=DateTimeFormatter.ISO_LOCAL_DATE;
         @Override

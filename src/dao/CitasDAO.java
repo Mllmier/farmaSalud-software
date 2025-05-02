@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import model.Cita;
+import model.Medico;
+
 
 /**
  *
@@ -104,6 +106,22 @@ public class CitasDAO {
         }
     }
     return citasPaciente;
+}  
+    public List<Cita> obtenerCitasMedico(String documentoMedico) {
+    List<Cita> todasLasCitas = cargarTodos();
+    List<Cita> citasMedico = new ArrayList<>();
+    
+    if (documentoMedico == null || documentoMedico.trim().isEmpty()) {
+        return citasMedico;
+    }
+    
+    for (Cita cita : todasLasCitas) {
+        if (cita.getDocumentoMedico()!= null && 
+            cita.getDocumentoMedico().equals(documentoMedico)) {
+            citasMedico.add(cita);
+        }
+    }
+    return citasMedico;
 }
      public boolean eliminarCita(String IdCita) {
     try {
@@ -128,7 +146,7 @@ public class CitasDAO {
         return false;
     }     
 }
-     public boolean actualizarCita(String idCitaOriginal, Cita citaActualizada) {
+    public boolean actualizarCita(String idCitaOriginal, Cita citaActualizada) {
     try {
         List<Cita> citas = cargarTodos();
         for (int i = 0; i < citas.size(); i++) {
@@ -143,7 +161,6 @@ public class CitasDAO {
         e.printStackTrace();
         return false;
     }
-
 }
    
   public class LocalDateAdapter extends TypeAdapter<LocalDate> {

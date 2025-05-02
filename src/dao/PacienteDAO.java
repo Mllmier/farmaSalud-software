@@ -43,7 +43,7 @@ public class PacienteDAO {
     List<Paciente> pacientes = cargarTodos();
     for (Paciente paciente : pacientes) {
         if (paciente.getNumeroDocumento().equals(documento)) {
-            return paciente; // Asegúrate que esto retorna Paciente, no Persona
+            return paciente; 
         }
     }
     return null;

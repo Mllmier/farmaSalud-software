@@ -37,31 +37,6 @@
   },
   {
     "tipoSangre": "O-",
-    "tipoDocumento": "TI",
-    "numeroDocumento": "0986424689",
-    "nombres": "mono",
-    "apellidos": "too",
-    "fechaNacimiento": "2000-09-09",
-    "sexo": "F",
-    "eps": "Sanistas",
-    "email": "jfvnjf@gmail.com",
-    "celular": "1234567890"
-  },
-  {
-    "tipoSangre": "O-",
-    "tipoDocumento": "TI",
-    "Antecendentes": "monocromatico",
-    "numeroDocumento": "098642468",
-    "nombres": "mono",
-    "apellidos": "too",
-    "fechaNacimiento": "2000-09-09",
-    "sexo": "F",
-    "eps": "Sanistas",
-    "email": "jfvnjf@gmail.com",
-    "celular": "1234567890"
-  },
-  {
-    "tipoSangre": "O-",
     "tipoDocumento": "RC",
     "Antecendentes": "sufre de laergias cronicas contra la alergias",
     "numeroDocumento": "1234567895",
@@ -81,9 +56,35 @@
     "nombres": "juan",
     "apellidos": "cano",
     "fechaNacimiento": "1876-09-05",
-    "sexo": "F",
+    "sexo": "M",
     "eps": "Comfamiliar",
-    "email": "hvd@gmail.com",
+    "email": "hvd@gmail.cam",
     "celular": "234567890"
+  },
+  {
+    "tipoSangre": "O-",
+    "tipoDocumento": "RC",
+    "Antecendentes": "sufre de delgadez y esta loca",
+    "numeroDocumento": "1234567777",
+    "nombres": "karen",
+    "apellidos": "leon",
+    "fechaNacimiento": "2023-09-09",
+    "sexo": "F",
+    "eps": "Coosalud",
+    "email": "karen@gmail.com",
+    "celular": "322455677888"
+  },
+  {
+    "tipoSangre": "A-",
+    "tipoDocumento": "RC",
+    "Antecendentes": "sufre del corazon",
+    "numeroDocumento": "1234567899",
+    "nombres": "vanessa",
+    "apellidos": "solo",
+    "fechaNacimiento": "2003-09-09",
+    "sexo": "F",
+    "eps": "Coosalud",
+    "email": "vane@gmail.com",
+    "celular": "1234567890"
   }
 ]

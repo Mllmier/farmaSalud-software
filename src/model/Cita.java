@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class Cita {
     private  String IdCita;
@@ -12,9 +13,9 @@ public class Cita {
     private String motivo;
     private EstadoCita estado;
     private String documentoPaciente;
-    
-    private String  especialidad;
-
+    private Paciente paciente;
+    private Medico medico;
+    private String documentoMedico;
     public enum EstadoCita {
         PROGRAMADA,
         COMPLETADA,
@@ -33,17 +34,18 @@ public class Cita {
         }
     }
 
-    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio,EstadoCita estado,String  especialidad ) {
+    
+    public Cita(String IdCita,LocalDate fechaCita, String  hora,String motivo,String tipoCita,String consultorio,EstadoCita estado,Paciente paciente,Medico medico ) {
         
         this.IdCita=IdCita;
         this.motivo=motivo;
         this.fechaCita = fechaCita;
         this.hora = hora;
         this.tipoCita=tipoCita;
-        this.especialidad=especialidad;
         this.motivo=motivo;
         this.consultorio=consultorio;
         this.estado = estado;
+        this.medico=medico;
            }
     
 
@@ -103,13 +105,7 @@ public class Cita {
     public void setEstado(EstadoCita estado) {
         this.estado = estado;
     }
-    public String getMedico() {
-        return especialidad;
-    }
 
-    public void setMedico(String  especialidad) {
-        this.especialidad = especialidad;
-    } 
 
     public String getDocumentoPaciente() {
         return documentoPaciente;
@@ -118,4 +114,30 @@ public class Cita {
     public void setDocumentoPaciente(String documentoPaciente) {
         this.documentoPaciente = documentoPaciente;
     }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public String getDocumentoMedico() {
+        return documentoMedico;
+    }
+
+    public void setDocumentoMedico(String documentoMedico) {
+        this.documentoMedico = documentoMedico;
+    }
+    
+    
 }
