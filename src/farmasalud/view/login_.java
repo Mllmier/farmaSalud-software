@@ -67,7 +67,7 @@ public class login_ extends javax.swing.JFrame {
         jPanel2.add(Jtextfield_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 300, 29));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutica" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccione una opcion>", "Administrador", "Doctor", "Recepcionista", "Farmaceutica", "Paciente" }));
         jComboBox1.setBorder(null);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,90 +143,70 @@ public class login_ extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     String email = Jtextfield_usuario.getText().trim();
     String documento = new String(Jtextfield_contraseña.getPassword());
+    String rolSeleccionado = (String) jComboBox1.getSelectedItem();
+    
     
     if (email.isEmpty() || documento.isEmpty()) {
-        JOptionPane.showMessageDialog(this,
-                "Email y número de documento son requeridos",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+        mostrarError("Email y número de documento son requeridos");
         return;
     }
 
-    String rolSeleccionado = (String) jComboBox1.getSelectedItem();
-    usuarioDAO usuarioDAO = new usuarioDAO();
-    Object usuario = null;
     
+    if (rolSeleccionado.equals("<Seleccione su rol>")) {
+        mostrarError("Debe seleccionar un rol válido");
+        return;
+    }
+
     try {
-        switch(rolSeleccionado) {
-            case "Administrador":
-                usuario = usuarioDAO.buscarAdministrador(email, documento);
-                break;
-            case "Doctor":
-                usuario = usuarioDAO.buscarMedico(email, documento);
-                break;
-            case "Recepcionista":
-                usuario = usuarioDAO.buscarRecepcionista(email, documento);
-                break;
-            case "Farmaceutica":
-                usuario = usuarioDAO.buscarFarmaceutico(email, documento);
-                break;
-            default:
-                JOptionPane.showMessageDialog(this,
-                        "Seleccione un rol válido",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+        
+        usuarioDAO usuarioDAO = new usuarioDAO();
+        Object usuario = usuarioDAO.validarCredenciales(email, documento, rolSeleccionado);
+
+        if (usuario == null) {
+            mostrarError("Credenciales incorrectas o usuario no existe");
+            return;
         }
 
-        if (usuario != null) {
-            if (usuarioDAO.esAdministrador(usuario)) {
-                JOptionPane.showMessageDialog(this,
-                        "Bienvenido Administrador",
-                        "Login Exitoso",
-                        JOptionPane.INFORMATION_MESSAGE);
-                new admin().setVisible(true);
-                this.dispose();
-            } else if (usuarioDAO.esRecepcionista(usuario)) {
-                JOptionPane.showMessageDialog(this,
-                        "Bienvenida Recepcionista",
-                        "Login Exitoso",
-                        JOptionPane.INFORMATION_MESSAGE);
-                new recepcionista().setVisible(true);
-                this.dispose();
-            } else if (usuarioDAO.esMedico(usuario)) {
-                JOptionPane.showMessageDialog(this,
-                        "Bienvenido Doctor",
-                        "Login Exitoso",
-                        JOptionPane.INFORMATION_MESSAGE);
-                new Doctor().setVisible(true);
-                this.dispose();
-            } else if (usuarioDAO.esFarmaceutico(usuario)) {
-                try {
-                    new Farmaceutica().setVisible(true);
-                    this.dispose();
-                    JOptionPane.showMessageDialog(this,
-                            "Bienvenido/a Farmacéutico/a",
-                            "Login Exitoso",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this,
-                            "Error al abrir la interfaz de Farmacéutico: " + e.getMessage(),
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Credenciales incorrectas o usuario no existe",
-                    "Error de Login",
-                    JOptionPane.ERROR_MESSAGE);
+        
+        if (usuarioDAO.esAdministrador(usuario)) {
+            abrirVista(new admin(), "Bienvenido Administrador");
+        } else if (usuarioDAO.esRecepcionista(usuario)) {
+            abrirVista(new recepcionista(), "Bienvenida Recepcionista");
+        } else if (usuarioDAO.esMedico(usuario)) {
+            abrirVista(new Doctor(), "Bienvenido Doctor");
+        } else if (usuarioDAO.esFarmaceutico(usuario)) {
+            abrirVista(new Farmaceutica(), "Bienvenido/a Farmacéutico/a");
+        } else if (usuarioDAO.esPaciente(usuario)) {
+            abrirVista(new Paciente(), "Bienvenido Paciente");
         }
+        
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-                "Error durante el login: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+        mostrarError("Error durante el login: " + e.getMessage());
+        e.printStackTrace();
     }
+}
+
+// Métodos auxiliares para mejor organización
+
+private void abrirVista(JFrame vista, String mensajeBienvenida) {
+    try {
+        vista.setVisible(true);
+        this.dispose();
+        JOptionPane.showMessageDialog(this, 
+            mensajeBienvenida, 
+            "Login Exitoso", 
+            JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception e) {
+        mostrarError("Error al abrir la vista: " + e.getMessage());
+    }
+}
+
+private void mostrarError(String mensaje) {
+    JOptionPane.showMessageDialog(this, 
+        mensaje, 
+        "Error", 
+        JOptionPane.ERROR_MESSAGE);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
