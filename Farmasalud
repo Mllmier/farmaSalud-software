@@ -1,0 +1,64 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Secretaria
+actor Medico
+actor Paciente
+actor Farmacia
+actor Administradora
+
+package "Gestión de Citas" {
+    usecase "Agendar Cita" as UC1
+    usecase "Cancelar Cita" as UC2
+}
+
+package "Atención Médica" {
+    usecase "Crear Orden Médica" as UC3
+}
+
+package "Gestión de Reclamos" {
+    usecase "Enviar Reclamo" as UC4
+    usecase "Procesar Reclamo" as UC5
+}
+
+package "Farmacia" {
+    usecase "Verificar Disponibilidad\nMedicamentos" as UC6
+    usecase "Verificar Vencimiento\nMedicamentos" as UC7
+    usecase "Generar Recibo" as UC8
+}
+
+package "Administración" {
+    usecase "Actualizar Inventario" as UC9
+    usecase "Gestionar Medicamentos" as UC10
+    usecase "Generar Informe Diario" as UC11
+}
+
+' Relaciones con actores
+Secretaria --> UC1
+Secretaria --> UC2
+
+Medico --> UC3
+UC3 --> UC4
+
+Farmacia --> UC5
+Farmacia --> UC6
+Farmacia --> UC7
+Farmacia --> UC8
+
+Administradora --> UC9
+Administradora --> UC10
+Administradora --> UC5
+
+Paciente --> UC1
+Paciente --> UC3
+Paciente --> UC8
+
+UC5 --> UC8
+UC5 --> UC6
+UC5 --> UC7
+
+UC4 --> UC5
+UC8 --> UC11
+
+@enduml
+
