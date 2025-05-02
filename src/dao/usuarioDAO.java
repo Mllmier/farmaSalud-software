@@ -137,7 +137,8 @@ public class usuarioDAO {
                         email,
                         json.get("celular").getAsString(),
                         json.get("tipoDocumento").getAsString(),
-                        json.get("tipoSangre").getAsString()
+                        json.get("tipoSangre").getAsString(),
+                        json.get("antecedentes").getAsString()
                     );
                 }
             }
