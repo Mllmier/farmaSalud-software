@@ -484,19 +484,20 @@ citaActualizada.setDocumentoMedico(documentoMedico);
         lblNombreMedico.setText("");
     }
   
-public void buscarCitaPorId(String idCita) {
+public void buscarCitaPorDocumento(String documentoPaciente) {
     try {
         tableModelCita.setRowCount(0);
 
         List<Cita> citas = citasDAO.cargarTodos();
 
         for (Cita cita : citas) {
-            if (cita.getIdCita().toLowerCase().contains(idCita.toLowerCase())) {
-                Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
-                Medico medico=medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
+            if (cita.getDocumentoPaciente() != null && 
+                cita.getDocumentoPaciente().toLowerCase().contains(documentoPaciente.toLowerCase())) {
                 
-                if (paciente != null) {
-                    // Añadir fila a la tabla
+                Paciente paciente = pacienteDAO.buscarPorDocumento(cita.getDocumentoPaciente());
+                Medico medico = medicoDAO.buscarPorDocumentoMedico(cita.getDocumentoMedico());
+                
+                if (paciente != null && medico != null) {
                     Object[] row = {
                         paciente.getNumeroDocumento(),
                         paciente.getNombres(),
@@ -514,8 +515,6 @@ public void buscarCitaPorId(String idCita) {
                         medico.getNombres(),
                         medico.getApellidos(),
                         medico.getEspecialidad()
-                       
-
                     };
                     tableModelCita.addRow(row);
                 }
@@ -524,7 +523,7 @@ public void buscarCitaPorId(String idCita) {
 
         if (tableModelCita.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, 
-                "No se encontraron citas con el ID: " + idCita, 
+                "No se encontraron citas para el paciente con documento: " + documentoPaciente, 
                 "Búsqueda sin resultados", 
                 JOptionPane.INFORMATION_MESSAGE);
         }

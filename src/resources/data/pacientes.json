@@ -86,5 +86,18 @@
     "eps": "Coosalud",
     "email": "vane@gmail.com",
     "celular": "1234567890"
+  },
+  {
+    "tipoSangre": "B+",
+    "tipoDocumento": "CC",
+    "Antecendentes": "hermosa toda la vida",
+    "numeroDocumento": "1234567898",
+    "nombres": "ines",
+    "apellidos": "leon",
+    "fechaNacimiento": "1999-07-10",
+    "sexo": "F",
+    "eps": "Nueva Eps",
+    "email": "karen@gmail.com",
+    "celular": "3114253802"
   }
 ]

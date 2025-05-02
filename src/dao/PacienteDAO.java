@@ -111,6 +111,16 @@ public class PacienteDAO {
         return false;
     }
 }
+       public Paciente buscarPorDocumentoo(String documento) {
+    List<Paciente> pacientes = cargarTodos(); // O leer desde JSON, BD, etc.
+    for (Paciente paciente : pacientes) {
+        if (paciente.getNumeroDocumento().equals(documento)) {
+            return paciente;
+        }
+    }
+    return null;
+}
+
    
   public class LocalDateAdapter extends TypeAdapter<LocalDate> {
         private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;

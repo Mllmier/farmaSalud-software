@@ -95,5 +95,27 @@
     "estado": "PROGRAMADA",
     "documentoPaciente": "0987654321",
     "documentoMedico": "12345889900"
+  },
+  {
+    "IdCita": "67",
+    "fechaCita": "2000-09-09",
+    "hora": "09:00",
+    "tipoCita": "Regular",
+    "consultorio": "Consultorio 2",
+    "motivo": "Prevencion",
+    "estado": "COMPLETADA",
+    "documentoPaciente": "1234567777",
+    "medico": {
+      "especialidad": "Cardilogo",
+      "numeroDocumento": "1234567890",
+      "nombres": "nicoller",
+      "apellidos": "lopez",
+      "fechaNacimiento": "2000-09-09",
+      "sexo": "F",
+      "eps": "Item 1",
+      "email": "nicolle@gmail.com",
+      "celular": "1234567890"
+    },
+    "documentoMedico": "1234567890"
   }
 ]

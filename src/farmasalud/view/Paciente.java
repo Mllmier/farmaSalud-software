@@ -78,19 +78,16 @@ public class Paciente extends javax.swing.JFrame {
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Nombre", "Identificacion", "Medico", "Fecha", "Consultorio", "Tipo de cita ", "Estado de la cita", "Hora de la cita"
+
             }
         ));
         jScrollPane4.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(7).setResizable(false);
-        }
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maria liz\\Downloads\\seña (1) (1).jpg")); // NOI18N
 

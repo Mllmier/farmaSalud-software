@@ -8,6 +8,7 @@ import dao.PacienteDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -39,6 +40,7 @@ public class ControllerPaciente {
     private JComboBox<String> cbTipoDocumento;
     private JComboBox<String> cboTipoSangre;
     private JTextArea txtAreaAntecedente;
+    private JButton txtBuscarPorDocumento;
     
      public void setTablaPacientes(JTable tablaPacientes) {
         this.tablaPacientes = tablaPacientes;
@@ -348,5 +350,47 @@ public class ControllerPaciente {
             documentoOriginal = txtDocumentoR.getText();
         }
     }
+    public void buscarPacientePorDocumento(String documento) {
+    try {
+        tableModelPaciente.setRowCount(0); // Limpiar la tabla
+        
+        List<Paciente> pacientes = pacienteDAO.cargarTodos();
+        
+        for (Paciente paciente : pacientes) {
+            if (paciente.getNumeroDocumento().toLowerCase().contains(documento.toLowerCase())) {
+                Object[] row = {
+                    paciente.getNumeroDocumento(), 
+                    paciente.getNombres(),         
+                    paciente.getApellidos(),      
+                    paciente.getFechaNacimiento(),
+                    paciente.getSexo(),           
+                    paciente.getEps(),            
+                    paciente.getEmail(),           
+                    paciente.getCelular(),  
+                    paciente.getTipoDocumento(),
+                    paciente.getTipoSangre(),
+                    paciente.getAntecendentes()
+                };
+                tableModelPaciente.addRow(row);
+            }
+        }
+        
+        if (tableModelPaciente.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, 
+                "No se encontraron pacientes con el documento: " + documento, 
+                "Búsqueda sin resultados", 
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, 
+            "Error al buscar pacientes: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+   }
+    
+
+    
 }
 
