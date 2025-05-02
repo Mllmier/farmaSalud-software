@@ -4,22 +4,115 @@
  */
 package farmasalud.view;
 
+import Controller.ControllerOrdenMedica;
+import Controller.ControllerPaciente;
+import dao.PacienteDAO;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.OrdenMedica;
 
 /**
  *
  * @author HP
  */
 public class Doctor extends javax.swing.JFrame {
+    
+    private ControllerPaciente controller;
+    private DefaultTableModel tableModelPaciente;
+    private PacienteDAO pacienteDAO = new PacienteDAO();
+    private ControllerOrdenMedica controllerorden;
 
+    
+    
     public Doctor() {
-        initComponents();
-       
-   
-     
+      
+    initComponents();
+   configurarPacientes();
+   controllerorden= new ControllerOrdenMedica(this);
+    configurarContollerOrden();
+  
+  
+      tablaPacientes.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {  
+            cargarDatosDelPacienteSeleccionado();
+        }
+    });
+
         
     }
+    private void configurarPacientes() {
+        try {
+            controller = new ControllerPaciente();
 
+            controller.setTablaPacientes(tablaPacientes);
+            controller.setTxtNombre(jcantidad);
+            controller.setTxtApellidos(jcantidad);
+            controller.setTxtDocumentoR(jcantidad);
+            controller.setTxtEmail(jcantidad);
+            controller.setTxtFechaNacimiento(jcantidad);
+            controller.setTxtTelefono(jcantidad);
+            controller.setCbSexo(jComboBox2);
+            controller.setCbEps(jComboBox2);
+            controller.setCbTipoDocumento(jComboBox2);
+            controller.setCboTipoSangre(jComboBox2);
+            //.setTxtAreaAntecedente(jdiansotico);
+
+            controller.initTablePaciente();
+            controller.cargarDatosEnTablaPaciente();
+
+            
+
+        } catch (Exception e) {
+            mostrarError("Error configurando pacientes: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+   
+    
+
+     private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this,
+                mensaje,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+     
+   private void cargarDatosDelPacienteSeleccionado() {
+    int filaSeleccionada = tablaPacientes.getSelectedRow();
+    
+    if (filaSeleccionada >= 0) {  
+        DefaultTableModel model = (DefaultTableModel) tablaPacientes.getModel();
+        
+        jLabel7.setText(model.getValueAt(filaSeleccionada, 1).toString());      
+        jLabel19.setText(model.getValueAt(filaSeleccionada, 2).toString());   
+        jLabel11.setText((String) model.getValueAt(filaSeleccionada, 9));     
+        jLabel15.setText((String) model.getValueAt(filaSeleccionada, 4));           
+        jLabel18.setText((String) model.getValueAt(filaSeleccionada, 5));          
+        jLabel21.setText(model.getValueAt(filaSeleccionada, 0).toString()); 
+    }
+}
+   
+   private void configurarContollerOrden(){
+   controllerorden.setjLabel21(jLabel21);
+   controllerorden.setjLabel7(jLabel7);
+   controllerorden.setjLabel19(jLabel19);
+   controllerorden.setjLabel11(jLabel11);
+   controllerorden.setjLabel18(jLabel18);
+   controllerorden.setjLabel15(jLabel15);
+   controllerorden.setjTextField1(jTextField1);
+   controllerorden.setJcantidad(jcantidad);
+   controllerorden.setJnombre(jnombre);
+   
+   
+   controllerorden.guardarDiagnostico();
+   }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,13 +141,11 @@ public class Doctor extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        btnAddMedicamento = new javax.swing.JButton();
         jLabel37 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jcantidad = new javax.swing.JTextField();
+        jnombre = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel34 = new javax.swing.JLabel();
@@ -65,7 +156,6 @@ public class Doctor extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -76,6 +166,12 @@ public class Doctor extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
+        jLabel20 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
         PanelAgenda = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -141,7 +237,7 @@ public class Doctor extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Diagnostico");
-        Diagnostico.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, 50));
+        Diagnostico.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, 50));
 
         jPanel2.add(Diagnostico, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 240, 70));
 
@@ -167,9 +263,9 @@ public class Doctor extends javax.swing.JFrame {
         AgendaLayout.setHorizontalGroup(
             AgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AgendaLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(59, 59, 59)
                 .addComponent(jLabel6)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         AgendaLayout.setVerticalGroup(
             AgendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,34 +309,20 @@ public class Doctor extends javax.swing.JFrame {
 
         jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel33.setText("Cantidad");
-        jPanel9.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 70, -1));
+        jPanel9.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 70, -1));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel35.setText("Nombre");
-        jPanel9.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
-
-        btnAddMedicamento.setBackground(new java.awt.Color(10, 92, 184));
-        btnAddMedicamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnAddMedicamento.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddMedicamento.setText("Agregar");
-        jPanel9.add(btnAddMedicamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 98, -1));
+        jPanel9.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, 20));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jPanel9.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 58, -1, -1));
         jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 75, 61, -1));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel9.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 150, 30));
-        jPanel9.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 70, 30));
+        jPanel9.add(jcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 50, 30));
+        jPanel9.add(jnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 150, 30));
 
         PanelDiagnostico.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 360, 140));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jScrollPane2.setViewportView(jTextArea1);
-
-        PanelDiagnostico.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 360, 100));
+        PanelDiagnostico.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 90, 20));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setText("Diagnostico");
@@ -250,6 +332,16 @@ public class Doctor extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Finalizar");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         PanelDiagnostico.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, -1, -1));
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -285,7 +377,6 @@ public class Doctor extends javax.swing.JFrame {
 
         jLabel8.setText("Apellido:");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 50, 30));
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 90, 20));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 53, 90, 10));
@@ -305,13 +396,31 @@ public class Doctor extends javax.swing.JFrame {
         jPanel4.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 90, 10));
 
         jLabel17.setText("Eps:");
-        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, 20));
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 90, 20));
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, 20));
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 90, 20));
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel4.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 90, 10));
+        jPanel4.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 90, 10));
+
+        jLabel20.setText("Numero de documento:");
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 130, 30));
+
+        jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel4.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 100, 10));
+        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 100, 20));
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 90, 20));
 
         PanelDiagnostico.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 600, 200));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTextField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        jPanel5.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 40));
+
+        PanelDiagnostico.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 360, 130));
 
         jTabbedPane1.addTab("Diagnostico", PanelDiagnostico);
 
@@ -448,6 +557,16 @@ public class Doctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        // TODO add your handling code here:
+        controllerorden.guardarDiagnostico();
+    }//GEN-LAST:event_jButton4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -490,9 +609,7 @@ public class Doctor extends javax.swing.JFrame {
     private javax.swing.JPanel PanelAgenda;
     private javax.swing.JPanel PanelDiagnostico;
     private javax.swing.JScrollPane Tabladepacientes;
-    private javax.swing.JButton btnAddMedicamento;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -504,7 +621,10 @@ public class Doctor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
@@ -527,21 +647,23 @@ public class Doctor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jcantidad;
+    private javax.swing.JTextField jnombre;
     private javax.swing.JLabel lblIconRecepcion;
     private javax.swing.JTable tablaPacientes;
     // End of variables declaration//GEN-END:variables
